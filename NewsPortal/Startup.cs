@@ -41,7 +41,7 @@ namespace NewsPortal
                 options.UseSqlite(Configuration.GetConnectionString("SqliteConnectionString")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // DI for image service
+            // DI for image viewhelper service
             services.AddTransient<ImageService>();
 
         }

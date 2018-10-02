@@ -112,7 +112,7 @@ namespace NewsPortal.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IsArticleExists(article.Id))
+                    if (!ArticleExists(article.Id))
                     {
                         return NotFound();
                     }
@@ -157,7 +157,7 @@ namespace NewsPortal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool IsArticleExists(int id)
+        private bool ArticleExists(int id)
         {
             return _context.Article.Any(e => e.Id == id);
         }
