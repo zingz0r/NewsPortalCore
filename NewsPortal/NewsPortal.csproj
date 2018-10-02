@@ -17,4 +17,10 @@
     <Folder Include="wwwroot\articles\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Articles\Archive.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

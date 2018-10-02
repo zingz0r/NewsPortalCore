@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NewsPortal.Models.Entiy;
 
-namespace NewsPortal.Models.Entiy
+namespace NewsPortal.Entity
 {
     public class NewsPortalContext : DbContext
     {

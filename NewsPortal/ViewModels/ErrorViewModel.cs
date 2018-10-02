@@ -1,6 +1,4 @@
-using System;
-
-namespace NewsPortal.Models
+namespace NewsPortal.ViewModels
 {
     public class ErrorViewModel
     {

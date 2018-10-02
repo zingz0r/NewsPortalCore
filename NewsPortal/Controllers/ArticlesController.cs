@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NewsPortal.Models.Entiy;
+using NewsPortal.Entity;
 
 namespace NewsPortal.Controllers
 {
@@ -112,7 +112,7 @@ namespace NewsPortal.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleExists(article.Id))
+                    if (!IsArticleExists(article.Id))
                     {
                         return NotFound();
                     }
@@ -157,7 +157,7 @@ namespace NewsPortal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArticleExists(int id)
+        private bool IsArticleExists(int id)
         {
             return _context.Article.Any(e => e.Id == id);
         }

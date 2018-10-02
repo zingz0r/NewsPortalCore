@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace NewsPortal.Models.Entiy
+namespace NewsPortal.Entity
 {
     public class Article
     {
-
         [Key]
         [Required]
         public int Id { get; set; }

@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NewsPortal.Models.Entiy;
+using NewsPortal.Entity;
+using NewsPortal.Interfaces;
+using NewsPortal.Services;
 
 namespace NewsPortal
 {
@@ -38,6 +40,10 @@ namespace NewsPortal
             services.AddDbContext<NewsPortalContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("SqliteConnectionString")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // DI for image service
+            services.AddTransient<ImageService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

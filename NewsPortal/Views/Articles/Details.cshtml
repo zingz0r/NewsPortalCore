@@ -1,4 +1,6 @@
-﻿@model NewsPortal.Models.Entiy.Article
+﻿@using NewsPortal.Services
+@model NewsPortal.Entity.Article
+@inject ImageService ImageService
 
 @{
     ViewData["Title"] = "Details";
@@ -21,6 +23,30 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Summary)
+        </dd>
+        <dt>
+            Image
+        </dt>
+        <dd>
+            @{
+                bool isFirstShowed = false;
+                foreach (var item in ImageService.GetPictureIdsForAnArticle(Model.Id))
+                {
+                    if (!isFirstShowed)
+                    {
+                        isFirstShowed = true;
+
+                        <a href="@Url.Action("GetImage", "Manager", new { id = item, isLarge = true })" data-lightbox="@Model.Id" class="col-sm-4">
+                            <img src="@Url.Action("GetImage", "Manager", new {id = item, isLarge = false})" class="img-fluid" alt="" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("GetImage", "Manager", new {id = item, isLarge = true})" data-lightbox="@Model.Id" class="col-sm-4"></a>
+                    }
+                }
+            }
+
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Text)
@@ -52,3 +78,13 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts
+{
+    <script>
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true
+        })
+    </script>
+}
