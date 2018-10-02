@@ -9,7 +9,7 @@ using NewsPortal.Models.Entiy;
 namespace NewsPortal.Migrations
 {
     [DbContext(typeof(NewsPortalContext))]
-    [Migration("20180926100526_InitialCreate")]
+    [Migration("20181002111947_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,24 @@ namespace NewsPortal.Migrations
                     b.ToTable("Article");
                 });
 
+            modelBuilder.Entity("NewsPortal.Models.Entiy.Picture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<byte[]>("LargeImageData");
+
+                    b.Property<byte[]>("SmallImageData");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("Picture");
+                });
+
             modelBuilder.Entity("NewsPortal.Models.Entiy.User", b =>
                 {
                     b.Property<int>("Id")
@@ -69,6 +87,14 @@ namespace NewsPortal.Migrations
                     b.HasOne("NewsPortal.Models.Entiy.User", "Author")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NewsPortal.Models.Entiy.Picture", b =>
+                {
+                    b.HasOne("NewsPortal.Models.Entiy.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -15,7 +15,7 @@ namespace NewsPortal.Models.Entiy
         }
         
         public DbSet<Article> Article { get; set; }
-
+        public DbSet<Picture> Picture { get; set; }
         public DbSet<User> User { get; set; }
     }
 }
