@@ -9,7 +9,8 @@ namespace NewsPortal.ViewModels
 {
     public class PictureUploadViewModel
     {
-        public IFormFile ImageData { get; set; }
+        public IFormFile LargeImageData { get; set; }
+        public IFormFile SmallImageData { get; set; }
         public int ArticleId { get; set; }
     }
 }

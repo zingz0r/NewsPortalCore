@@ -16,18 +16,33 @@ namespace NewsPortal.Controllers
             _context = context;
         }
 
-        public FileResult GetImage(Int32? Id, Boolean IsLarge = false)
+        public FileResult GetImage(int? id, bool isLarge = false)
         {
-            if (Id == null) // nem adtak meg azonosítót
+            if (id == null)
                 return File("~/images/NoImage.png", "image/png");
 
-            // lekérjük a megadott azonosítóval rendelkező képet
-            Byte[] imageContent = _context.Picture
-                .Where(image => image.Id == Id)
-                .Select(image => IsLarge ? image.LargeImageData : image.SmallImageData)
-                .FirstOrDefault();
+            byte[] imageContent = _context.Picture
+                .Where(image => image.Id == id)
+                    .Select(image => isLarge ? image.LargeImageData : image.SmallImageData)
+                        .FirstOrDefault();
 
-            if (imageContent == null) // amennyiben nem sikerült betölteni, egy alapértelmezett képet adunk vissza
+            if (imageContent == null)
+                return File("~/images/NoImage.png", "image/png");
+
+            return File(imageContent, "image/png");
+        }
+
+        public FileResult GetFirstSmallImageForNewsId(int? articleId)
+        {
+            if (articleId == null)
+                return File("~/images/NoImage.png", "image/png");
+
+            byte[] imageContent = _context.Picture
+                .Where(x => x.ArticleId == articleId)
+                    .Select(x => x.SmallImageData)
+                        .FirstOrDefault();
+
+            if (imageContent == null)
                 return File("~/images/NoImage.png", "image/png");
 
             return File(imageContent, "image/png");

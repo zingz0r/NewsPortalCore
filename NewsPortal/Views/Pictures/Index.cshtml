@@ -29,10 +29,10 @@
         {
             <tr>
                 <td>
-                    <img src="@Url.Action("GetImage", "Manager", new { Id = item.Id, IsLarge = true  })">
+                    <img src="@Url.Action("GetImage", "Manager", new { id = item.Id, isLarge = true })">
                 </td>
                 <td>
-                    <img src="@Url.Action("GetImage", "Manager", new { Id = item.Id, IsLarge = false  })">
+                    <img src="@Url.Action("GetImage", "Manager", new { id = item.Id, isLarge = false })">
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Article.Summary)

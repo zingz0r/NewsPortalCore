@@ -60,15 +60,15 @@ namespace NewsPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PictureUploadViewModel pictureUploadViewModel)
         {
-            if (pictureUploadViewModel.ImageData == null)
+            if (pictureUploadViewModel.SmallImageData == null)
             {
-                ModelState.AddModelError("ImageData", "Please select an image!");
+                ModelState.AddModelError("SmallImageData", "Please select an image!");
             }
-            if (pictureUploadViewModel.ArticleId == null)
+            if (pictureUploadViewModel.LargeImageData == null)
             {
-                ModelState.AddModelError("ArticleId", "Select an article!");
+                ModelState.AddModelError("LargeImageData", "Please select an image!");
             }
-           
+
             if (ModelState.IsValid)
             {
 
@@ -77,19 +77,27 @@ namespace NewsPortal.Controllers
                     ArticleId = pictureUploadViewModel.ArticleId,
                 };
 
+                // Large Image
                 using (var memoryStream = new MemoryStream())
                 {
-                    await pictureUploadViewModel.ImageData.CopyToAsync(memoryStream);
-
-                    //TODO: resize the small
-                    picture.SmallImageData = memoryStream.ToArray();
+                    await pictureUploadViewModel.LargeImageData.CopyToAsync(memoryStream);
                     picture.LargeImageData = memoryStream.ToArray();
                 }
+
+                // Small image
+                using (var memoryStream = new MemoryStream())
+                {
+                    await pictureUploadViewModel.SmallImageData.CopyToAsync(memoryStream);
+                    picture.SmallImageData = memoryStream.ToArray();
+                }
+
                 _context.Add(picture);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ArticleId"] = new SelectList(_context.Article, "Id", "Summary");
+
             return View();
         }
 

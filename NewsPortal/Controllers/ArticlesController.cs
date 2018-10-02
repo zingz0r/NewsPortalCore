@@ -25,6 +25,12 @@ namespace NewsPortal.Controllers
             return View(await newsPortalContext.ToListAsync());
         }
 
+        public async Task<IActionResult> Archive()
+        {
+            var archiveData = _context.Article.OrderByDescending(x => x.Date);
+            return View(await archiveData.ToListAsync());
+        }
+
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
         {

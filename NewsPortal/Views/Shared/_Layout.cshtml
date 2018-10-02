@@ -45,7 +45,7 @@
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Index</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Archive</a>
+                        <a asp-area="" asp-controller="Articles" asp-action="Index" class="nav-link">Archive</a>
                     </li>
                     <li class="nav-item">
                         <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">About</a>
@@ -55,23 +55,17 @@
                     </li>
                     @* Admin *@
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">Articles Admin</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">Admin</a>
                         <div class="dropdown-menu" aria-labelledby="navdrop">
                             <a asp-area="" asp-controller="Articles" asp-action="Index" class="dropdown-item">Articles</a>
-                            <a asp-area="" asp-controller="Articles" asp-action="Create" class="dropdown-item">Create</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">User Admin</a>
-                        <div class="dropdown-menu" aria-labelledby="navdrop">
                             <a asp-area="" asp-controller="Users" asp-action="Index" class="dropdown-item">Users</a>
-                            <a asp-area="" asp-controller="Users" asp-action="Create" class="dropdown-item">Create</a>
+                            <a asp-area="" asp-controller="Pictures" asp-action="Index" class="dropdown-item">Pictures</a>
                         </div>
                     </li>
 
+
                 </ul>
             </div>
-            @*TODO: RenderPartial*@
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
