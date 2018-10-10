@@ -1,4 +1,5 @@
-﻿@model IEnumerable<NewsPortal.Entity.Article>
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<NewsPortal.Entity.Article>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,36 +7,61 @@
 
 <h2>Archive</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Summary)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Summary)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<form class="form-inline">
+    <!--Table-->
+    <div class="row">
+        <div class="col-sm">
+            Search for date:
+            <input class="form-control mr-sm-2" type="date" name="SearchDate" value="@ViewBag.SearchDate">
+        </div>
+        <div class="col-sm">
+            Search in title:
+            <input class="form-control mr-sm-2" type="search" placeholder="Search in title" name="SearchTitleString" value="@ViewBag.SearchTitleString" aria-label="Search">
+        </div>
+        <div class="col-sm">
+            Search in content
+            <input class="form-control mr-sm-2" type="search" placeholder="Search in content" name="SearchContentString" value="@ViewBag.searchContentString" aria-label="Search">
+        </div>
+        <div class="col-sm">
+            <br />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+<br />
+
+@if (Model.Count != 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Summary)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Summary)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <pager list="@Model" options="@PagedListRenderOptions.TwitterBootstrapPager4" asp-action="Archive" asp-controller="Articles" />
 }
-    </tbody>
-</table>
+else
+{
+    <div class="alert alert-info" role="alert">
+        Cant find anything related.
+    </div>
+}

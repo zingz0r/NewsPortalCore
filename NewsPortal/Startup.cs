@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,10 @@ namespace NewsPortal
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            // DI for pager 
+            // + Added taghelper to _ViewImports.cshtml
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             //services.AddDbContext<NewsPortalContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("MssqlConnectionString")));
