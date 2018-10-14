@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<sim-project version="11.80" multi-file="no" uid="simp997482abd503406aa78082f6a52ee88a">
+  <meta>
+    <name>Project</name>
+    <authors> </authors>
+    <description />
+  </meta>
+  <counters models="1">
+    <entity-names>
+      <counter>
+        <item-type stereotype="component" type-id="component" type="UmlComponent" />
+        <value>3</value>
+      </counter>
+    </entity-names>
+    <entity-ids>
+      <counter>
+        <item-type type-id="" type="AbstractElementGroup" />
+        <value>178</value>
+      </counter>
+      <counter>
+        <item-type type-id="component" type="UmlComponent" />
+        <value>4</value>
+      </counter>
+      <counter>
+        <item-type type-id="universal-connector" type="UniversalConnector" />
+        <value>3</value>
+      </counter>
+      <counter>
+        <item-type type-id="relationship" type="UmlAssociation" />
+        <value>2</value>
+      </counter>
+      <counter>
+        <item-type type-id="generalization" type="UmlGeneralization" />
+        <value>2</value>
+      </counter>
+      <counter>
+        <item-type type-id="dependency" type="UmlDependency" />
+        <value>3</value>
+      </counter>
+      <counter>
+        <item-type type-id="comment" type="UmlComment" />
+        <value>2</value>
+      </counter>
+    </entity-ids>
+    <diagrams>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlComponentDiagram</type>
+        <value>1</value>
+      </counter>
+    </diagrams>
+    <fields />
+  </counters>
+  <alias-groups />
+  <management uid="md-a933be6723564036883d9eb5a3378172" name="" task-id-sequence="0">
+    <persons>
+      <person id="P458ec5ad52004845905221c56a019bb5">
+        <first-name />
+        <last-name />
+        <role />
+        <e-mail />
+        <phone-number />
+        <description />
+        <color>#00000000</color>
+      </person>
+    </persons>
+    <teams />
+    <sprints />
+    <projects />
+    <modules />
+    <tasks />
+    <to-dos />
+  </management>
+  <glossary id="glsr-f7623052f7b0446e81b4c6e8965e23c9" />
+  <types default="UML">
+    <type-sets>
+      <type-set file="UmlTypes.xml" />
+    </type-sets>
+    <custom-types />
+  </types>
+  <items />
+  <models>
+    <model id="p3f1fcd86784745f6aeb729115e9020a6_186305269" name="Model1" namespace="" order-index="1">
+      <meta>
+        <authors>
+          <author> </author>
+        </authors>
+        <description />
+        <creation-date>10/14/2018 18:42:22</creation-date>
+        <change-date>01/01/0001 00:00:00</change-date>
+        <revision-count>0</revision-count>
+        <version />
+      </meta>
+      <abstract-items />
+      <sub-models />
+      <diagram type="uml-component" id="p3b86cbdf536f45da9128a01a458be15e_136078144" name="ComponentDiagram1" order-index="1" uid="" show-id="false" show-name="true" show-parent-name="false" name-style="local-auto-parents" show-stereotypes="true" show-tagged-values="false" show-template-parameters="true" show-fields="true" show-empty-compartments="true" show-special-indicators="false" show-attributes="true" show-attribute-visibility="true" show-operations="true" show-operation-parameters="true" show-operation-visibility="true" show-nullability="true" show-sequence-number="false" show-extension-points="false" show-relationship-texts="true" show-description="false" show-field-description="false" auto-routed-paths="false">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>10/14/2018 18:42:22</creation-date>
+          <change-date>10/14/2018 18:45:52</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="dida94e1051ca042acb61ebeda0adef9fd9243" cid="CPT002" type="component" name="Weboldal" style-class="Dark Blue" visibility="package" change-tracking-state="added" creator="P458ec5ad52004845905221c56a019bb5" creation-date="10/14/2018 18:43:01">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="Dark Blue" />
+            <component />
+          </item>
+          <item id="70a90e11cf0341b9a0c93c6f9c1439d2" cid="CPT002" type="component" name="Szerver" style-class="Dark Blue" visibility="package" change-tracking-state="added" creator="P458ec5ad52004845905221c56a019bb5" creation-date="10/14/2018 18:43:01">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="Dark Blue" />
+            <component />
+          </item>
+          <item id="di1005666fceea432c9d6a68cff749a3b73512" cid="CPT002" type="component" name="Adatbázis" style-class="Dark Blue" visibility="package" change-tracking-state="added" creator="P458ec5ad52004845905221c56a019bb5" creation-date="10/14/2018 18:43:01">
+            <stereotypes>
+              <stereotype name="component" />
+            </stereotypes>
+            <style class="Dark Blue" />
+            <component />
+          </item>
+          <item id="835176b3576e48e7b2545cc67ef91125" cid="DEP002" type="dependency" name="NewsPortalContext" style-class="" visibility="package" change-tracking-state="added" creator="P458ec5ad52004845905221c56a019bb5" creation-date="10/14/2018 18:45:04" from="70a90e11cf0341b9a0c93c6f9c1439d2" to="di1005666fceea432c9d6a68cff749a3b73512">
+            <style class="default" />
+          </item>
+          <item id="6aec1987cced47798bf158dfc72fa13c" cid="DEP001" type="dependency" name="Controllers" style-class="" visibility="package" change-tracking-state="added" creator="P458ec5ad52004845905221c56a019bb5" creation-date="10/14/2018 18:44:59" from="dida94e1051ca042acb61ebeda0adef9fd9243" to="70a90e11cf0341b9a0c93c6f9c1439d2">
+            <style class="default" />
+          </item>
+          <item id="1d086e7791bd4ced8cdbe5a19de37e15" cid="CMT001" type="comment" name="" style-class="Light Yellow" visibility="package" change-tracking-state="added" creator="P458ec5ad52004845905221c56a019bb5" creation-date="10/14/2018 18:45:52">
+            <style class="Light Yellow" />
+            <comment>HomeController
+ArticlesController
+UsersController
+PicturesController
+ManagerController</comment>
+          </item>
+        </abstract-items>
+        <layer id="bf8753712882420cbf230b34fbb28d1b" name="Default" visible="true" enabled="true" locked="false">
+          <item id="70a90e11cf0341b9a0c93c6f9c1439d2" iid="072039ff635e463094b11c269bd55b3f" show-fields="false" creation-date="10/14/2018 18:43:01" order-index="1" type="entity">
+            <layout ax="711" ay="231" awidth="226" aheight="106" x="711" y="231" width="226" height="106" />
+          </item>
+          <item id="dida94e1051ca042acb61ebeda0adef9fd9243" iid="a2a107ab81f544e7a2e13ae6de8c401f" show-fields="false" creation-date="10/14/2018 18:43:01" order-index="1" type="entity">
+            <layout ax="222" ay="231" awidth="226" aheight="106" x="222" y="231" width="226" height="106" />
+          </item>
+          <item id="di1005666fceea432c9d6a68cff749a3b73512" iid="0fb930d5c577439f814f672240079b8e" show-fields="false" creation-date="10/14/2018 18:43:01" order-index="1" type="entity">
+            <layout ax="1117" ay="231" awidth="226" aheight="106" x="1117" y="231" width="226" height="106" />
+          </item>
+          <item id="6aec1987cced47798bf158dfc72fa13c" iid="7155229b056d4a68860e037a2ebaf93d" creation-date="10/14/2018 18:44:59" order-index="2" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="false" lock-to-fields="false" auto-path="" x1="448" y1="284" x2="711" y2="284" start-border-pos="0.375" end-border-pos="0.875" name-position="-1,0">
+              <points>
+                <point x="448" y="284" />
+                <point x="489" y="241" />
+                <point x="653" y="242" />
+                <point x="696" y="284" />
+                <point x="711" y="284" />
+              </points>
+            </layout>
+            <relation from="dida94e1051ca042acb61ebeda0adef9fd9243" from-iid="a2a107ab81f544e7a2e13ae6de8c401f" to="70a90e11cf0341b9a0c93c6f9c1439d2" to-iid="072039ff635e463094b11c269bd55b3f" />
+          </item>
+          <item id="835176b3576e48e7b2545cc67ef91125" iid="56ae956ea03145bea44f2dc5d4c8a3e7" creation-date="10/14/2018 18:45:04" order-index="3" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="937" y1="284" x2="1117" y2="284" start-border-pos="0.375" end-border-pos="0.875" name-position="0,0">
+              <points>
+                <point x="937" y="284" />
+                <point x="1117" y="284" />
+              </points>
+            </layout>
+            <relation from="70a90e11cf0341b9a0c93c6f9c1439d2" from-iid="072039ff635e463094b11c269bd55b3f" to="di1005666fceea432c9d6a68cff749a3b73512" to-iid="0fb930d5c577439f814f672240079b8e" />
+          </item>
+          <item id="1d086e7791bd4ced8cdbe5a19de37e15" iid="1e572ed9aae643be9cae6c0f4a728d89" creation-date="10/14/2018 18:45:52" order-index="4" type="entity">
+            <layout ax="499" ay="261" awidth="150" aheight="76" x="499" y="261" width="150" height="76" />
+          </item>
+        </layer>
+      </diagram>
+    </model>
+  </models>
+</sim-project>

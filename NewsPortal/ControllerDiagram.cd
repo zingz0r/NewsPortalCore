@@ -57,32 +57,5 @@
       <FileName>Entity\NewsPortalContext.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="NewsPortal.Entity.Article">
-    <Position X="0.5" Y="9.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACCAACAAAAAAEAAgAAAAAgAAAAAAAABAAAACAAAAAA=</HashCode>
-      <FileName>Entity\Article.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Author" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="NewsPortal.Entity.Picture">
-    <Position X="3.25" Y="9.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAACAEAAAAAAAAAAAAAAAAAAMAAAAAAAgAAAAAAAAAA=</HashCode>
-      <FileName>Entity\Picture.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Article" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="NewsPortal.Entity.User">
-    <Position X="6" Y="11" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAACAQAAAAAAAAA=</HashCode>
-      <FileName>Entity\User.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
