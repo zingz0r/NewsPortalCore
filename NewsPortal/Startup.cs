@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NewsPortal.Models.Entiy;
+using NewsPortal.Entity;
+using NewsPortal.Interfaces;
+using NewsPortal.Services;
 
 namespace NewsPortal
 {
@@ -32,12 +35,20 @@ namespace NewsPortal
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // DI for pager 
+            // + Added taghelper to _ViewImports.cshtml
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
             //services.AddDbContext<NewsPortalContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("MssqlConnectionString")));
 
             services.AddDbContext<NewsPortalContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("SqliteConnectionString")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // DI for image viewhelper service
+            services.AddTransient<ImageService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

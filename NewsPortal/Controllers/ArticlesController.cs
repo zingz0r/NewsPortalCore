@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NewsPortal.Models.Entiy;
+using NewsPortal.Entity;
+using PagedList.Core;
 
 namespace NewsPortal.Controllers
 {
@@ -25,10 +26,32 @@ namespace NewsPortal.Controllers
             return View(await newsPortalContext.ToListAsync());
         }
 
-        public async Task<IActionResult> Archive()
+        public IActionResult Archive(int? page, DateTime? searchDate, string searchTitleString, string searchContentString)
         {
-            var archiveData = _context.Article.OrderByDescending(x => x.Date);
-            return View(await archiveData.ToListAsync());
+            var articles = _context.Article.Select(x => x);
+
+            if (searchDate != null)
+            {
+                ViewBag.SearchDate = searchDate.Value.ToString("yyyy-MM-dd");
+                articles = articles.Where(x => searchDate.HasValue ? searchDate.Value.Date == x.Date.Date : x.Date.Date == DateTime.UtcNow.Date);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTitleString))
+            {
+                ViewBag.SearchTitleString = searchTitleString;
+                articles = articles.Where(x => x.Title.Contains(searchTitleString));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchContentString))
+            {
+                ViewBag.SearchContentString = searchContentString;
+                articles = articles.Where(x => (x.Summary + x.Text).Contains(searchContentString));
+            }
+
+            // max 20 per page
+            PagedList<Article> pagedListArticles = new PagedList<Article>(articles.OrderByDescending(x => x.Date), page ?? 1, 20);
+
+            return View(pagedListArticles);
         }
 
         // GET: Articles/Details/5

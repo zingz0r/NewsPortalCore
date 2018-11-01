@@ -1,54 +1,57 @@
-﻿@model NewsPortal.Models.Entiy.Article
+﻿@using NewsPortal.Services
+@model NewsPortal.Entity.Article
+@inject ImageService ImageService
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Title)</h2>
 
 <div>
-    <h4>Article</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Summary)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Summary)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Text)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Text)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsFeatured)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsFeatured)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Author.Name)
-        </dd>
-    </dl>
+    <div>
+        @Html.DisplayFor(model => model.Summary)
+    </div>
+    <div class="text-center p-5">
+        @{
+            bool isFirstShowed = false;
+            foreach (var item in ImageService.GetPictureIdsForAnArticle(Model.Id))
+            {
+                if (!isFirstShowed)
+                {
+                    isFirstShowed = true;
+
+                    <a href="@Url.Action("GetImage", "Manager", new { id = item, isLarge = true })" data-lightbox="@Model.Id">
+                        <img src="@Url.Action("GetImage", "Manager", new {id = item, isLarge = false})" class="rounded mx-auto d-bloc" alt="" />
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("GetImage", "Manager", new {id = item, isLarge = true})" data-lightbox="@Model.Id"></a>
+                }
+            }
+        }
+
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.Text)
+    </div>
+    <div class="mt-2 alert alert-info">
+       Written by @Html.DisplayFor(model => model.Author.Name) on @Html.DisplayFor(model => model.Date)
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts
+    {
+    <script>
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true
+        })
+    </script>
+}

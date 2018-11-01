@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using NewsPortal.Models.Services;
-
+﻿using NewsPortal.Interfaces;
 
 namespace NewsPortal.Models
 {
