@@ -1,20 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace NewsPortal.Entity
 {
-    public class User
+    public class User : IdentityUser<int>
     {
-        [Key]
         [Required]
-        public int Id { get; set; }
-
-        [Required]
-        public string UserName { get; set; }
+        public override int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        public string Password { get; set; }
     }
 }
