@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NewsPortal.Entity
+namespace NewsPortal.Data.Entity
 {
     public class Picture
     {

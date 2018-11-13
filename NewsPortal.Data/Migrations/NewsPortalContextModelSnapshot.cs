@@ -3,9 +3,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NewsPortal.Entity;
+using NewsPortal.Data.Entity;
 
-namespace NewsPortal.Migrations
+namespace NewsPortal.Data.Migrations
 {
     [DbContext(typeof(NewsPortalContext))]
     partial class NewsPortalContextModelSnapshot : ModelSnapshot
@@ -120,7 +120,7 @@ namespace NewsPortal.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("NewsPortal.Entity.Article", b =>
+            modelBuilder.Entity("NewsPortal.Data.Entity.Article", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -147,7 +147,7 @@ namespace NewsPortal.Migrations
                     b.ToTable("Article");
                 });
 
-            modelBuilder.Entity("NewsPortal.Entity.Picture", b =>
+            modelBuilder.Entity("NewsPortal.Data.Entity.Picture", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -165,7 +165,7 @@ namespace NewsPortal.Migrations
                     b.ToTable("Picture");
                 });
 
-            modelBuilder.Entity("NewsPortal.Entity.User", b =>
+            modelBuilder.Entity("NewsPortal.Data.Entity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -228,7 +228,7 @@ namespace NewsPortal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("NewsPortal.Entity.User")
+                    b.HasOne("NewsPortal.Data.Entity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -236,7 +236,7 @@ namespace NewsPortal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("NewsPortal.Entity.User")
+                    b.HasOne("NewsPortal.Data.Entity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -249,7 +249,7 @@ namespace NewsPortal.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NewsPortal.Entity.User")
+                    b.HasOne("NewsPortal.Data.Entity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -257,23 +257,23 @@ namespace NewsPortal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("NewsPortal.Entity.User")
+                    b.HasOne("NewsPortal.Data.Entity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NewsPortal.Entity.Article", b =>
+            modelBuilder.Entity("NewsPortal.Data.Entity.Article", b =>
                 {
-                    b.HasOne("NewsPortal.Entity.User", "Author")
+                    b.HasOne("NewsPortal.Data.Entity.User", "Author")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NewsPortal.Entity.Picture", b =>
+            modelBuilder.Entity("NewsPortal.Data.Entity.Picture", b =>
                 {
-                    b.HasOne("NewsPortal.Entity.Article", "Article")
+                    b.HasOne("NewsPortal.Data.Entity.Article", "Article")
                         .WithMany()
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade);

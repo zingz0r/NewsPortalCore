@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NewsPortal.Entity
+namespace NewsPortal.Data.Entity
 {
     public class Article
     {

@@ -5,6 +5,16 @@ VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsPortal", "NewsPortal\NewsPortal.csproj", "{A8937A93-85BE-4EB5-A4B1-D68DE49FAC1A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsPortal.Data", "NewsPortal.Data\NewsPortal.Data.csproj", "{81E96473-670A-4A8B-BED1-EB315BEA0430}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsPortal.WebAPI", "NewsPortal.WebAPI\NewsPortal.WebAPI.csproj", "{85456482-5996-424D-A3C2-19E2C7B8DEEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.WPF", "NewsPortal.WPF\NewsPortal.WPF.csproj", "{EE13B171-A42B-4268-BC39-33B8D99DEE81}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81E96473-670A-4A8B-BED1-EB315BEA0430} = {81E96473-670A-4A8B-BED1-EB315BEA0430}
+		{85456482-5996-424D-A3C2-19E2C7B8DEEF} = {85456482-5996-424D-A3C2-19E2C7B8DEEF}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +25,18 @@ Global
 		{A8937A93-85BE-4EB5-A4B1-D68DE49FAC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8937A93-85BE-4EB5-A4B1-D68DE49FAC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8937A93-85BE-4EB5-A4B1-D68DE49FAC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E96473-670A-4A8B-BED1-EB315BEA0430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E96473-670A-4A8B-BED1-EB315BEA0430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E96473-670A-4A8B-BED1-EB315BEA0430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E96473-670A-4A8B-BED1-EB315BEA0430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85456482-5996-424D-A3C2-19E2C7B8DEEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85456482-5996-424D-A3C2-19E2C7B8DEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85456482-5996-424D-A3C2-19E2C7B8DEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85456482-5996-424D-A3C2-19E2C7B8DEEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

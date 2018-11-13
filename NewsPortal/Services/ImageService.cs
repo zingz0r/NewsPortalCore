@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NewsPortal.Entity;
+using NewsPortal.Data.Entity;
 using NewsPortal.Interfaces;
 
 namespace NewsPortal.Services

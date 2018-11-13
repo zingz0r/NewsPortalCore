@@ -1,0 +1,49 @@
+﻿<Window x:Class="NewsPortal.WPF.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NewsPortal.WPF.Views"
+        xmlns:properties="clr-namespace:NewsPortal.WPF.Properties"
+        xmlns:wpf="clr-namespace:NewsPortal.WPF"
+        mc:Ignorable="d"
+        Title="Login" Height="200" Width="445" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" UseLayoutRounding="False" MinWidth="450" MinHeight="200" MaxWidth="450" MaxHeight="200">
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
+    </Window.InputBindings>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="60" />-->
+            <RowDefinition Height="*" />
+            <!--Replace with previuous line if want header image-->
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!--Header Image -->
+        <!--<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Source="{Binding LoginImage}" />-->
+
+        <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Width="96" Source="{Binding LockImage}" Margin="0,0,10,0" />
+
+        <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="News Portal - Administration" HorizontalAlignment="Center" FontSize="18" />
+
+        <TextBlock Margin="5,5,5,5" Grid.Row="2" Grid.Column="1" Text="Username: " />
+
+        <TextBox Margin="5" Grid.Row="2" Grid.Column="2" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Padding="3,2,0,0" />
+
+        <TextBlock Margin="5,5,5,5" Grid.Row="3" Grid.Column="1" Text="Password: " />
+        <PasswordBox Name="passwordBox" Margin="5"  Grid.Row="3" Grid.Column="2" Padding="3,2,0,0" />
+
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Login" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=passwordBox}" Margin="5,5,5,5" Width="100" />
+            <Button Content="Cancel" Command="{Binding ExitCommand}" Margin="5" Width="100" />
+        </StackPanel>
+    </Grid>
+</Window>

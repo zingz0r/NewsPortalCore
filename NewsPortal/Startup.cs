@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NewsPortal.Entity;
+using NewsPortal.Data.Entity;
 using NewsPortal.Interfaces;
 using NewsPortal.Models;
 using NewsPortal.Services;

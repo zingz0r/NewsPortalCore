@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NewsPortal.Entity;
+using NewsPortal.Data.Entity;
 using PagedList.Core;
 
 namespace NewsPortal.Controllers
@@ -39,13 +38,13 @@ namespace NewsPortal.Controllers
             if (!string.IsNullOrWhiteSpace(searchTitleString))
             {
                 ViewBag.SearchTitleString = searchTitleString;
-                articles = articles.Where(x => x.Title.Contains(searchTitleString));
+                articles = articles.Where(x => x.Title.ToLower().Contains(searchTitleString.ToLower()));
             }
 
             if (!string.IsNullOrWhiteSpace(searchContentString))
             {
                 ViewBag.SearchContentString = searchContentString;
-                articles = articles.Where(x => (x.Summary + x.Text).Contains(searchContentString));
+                articles = articles.Where(x => (x.Summary + " " + x.Text).ToLower().Contains(searchContentString.ToLower()));
             }
 
             // max 20 per page
