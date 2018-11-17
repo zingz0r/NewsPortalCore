@@ -19,10 +19,9 @@ namespace NewsPortal.WebAPI.Controllers
         private readonly NewsPortalContext _context;
         private readonly UserManager<User> _userManager;
 
-        public ArticlesController(NewsPortalContext context, UserManager<User> userManager)
+        public ArticlesController(NewsPortalContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         [HttpGet]

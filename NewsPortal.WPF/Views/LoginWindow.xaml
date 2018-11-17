@@ -7,7 +7,7 @@
         xmlns:properties="clr-namespace:NewsPortal.WPF.Properties"
         xmlns:wpf="clr-namespace:NewsPortal.WPF"
         mc:Ignorable="d"
-        Title="Login" Height="200" Width="445" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" UseLayoutRounding="False" MinWidth="450" MinHeight="200" MaxWidth="450" MaxHeight="200">
+        Title="News Portal - Login" Height="200" Width="445"  WindowStartupLocation="CenterScreen" UseLayoutRounding="False" MinWidth="450" MinHeight="200" MaxWidth="450" MaxHeight="200" Icon="{Binding LockImage}">
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
     </Window.InputBindings>

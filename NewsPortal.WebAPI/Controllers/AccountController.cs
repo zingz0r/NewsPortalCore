@@ -35,6 +35,8 @@ namespace NewsPortal.WebAPI.Controllers
 
                 return Json(new { message = "Login Successful", response = "true" });
             }
+
+            // TODO: visszaadni a usert json helyett,
             catch
             {
                 return Json(new { message = "Something Happened! :(", response = "false" });
