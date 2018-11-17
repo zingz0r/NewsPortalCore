@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NewsPortal.WPF.ViewModels.BaseViewModel;
-using NewsPortal.Data.DTO;
+using NewsPortal.Data.Entity;
 using NewsPortal.WPF.Models;
 using NewsPortal.WPF.Persistences;
 using NewsPortal.WPF.Resources;
@@ -16,9 +16,9 @@ namespace NewsPortal.WPF.ViewModels
     class MainViewModel : ViewModelBase
     {
         private readonly INewsPortalModel _model;
-        private ObservableCollection<ArticleDTO> _articles;
+        private ObservableCollection<Article> _articles;
         private bool _isLoaded;
-        private ArticleDTO _selectedArticle;
+        private Article _selectedArticle;
 
 
         public event EventHandler ArticleEditingStarted;
@@ -39,7 +39,7 @@ namespace NewsPortal.WPF.ViewModels
         public DelegateCommand LogoutCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
 
-        public ObservableCollection<ArticleDTO> Articles
+        public ObservableCollection<Article> Articles
         {
             get => _articles;
             private set
@@ -63,8 +63,8 @@ namespace NewsPortal.WPF.ViewModels
                 }
             }
         }
-        public ArticleDTO EditedArticle { get; private set; }
-        public ArticleDTO SelectedArticle
+        public Article EditedArticle { get; private set; }
+        public Article SelectedArticle
         {
             get { return _selectedArticle; }
             set
@@ -95,20 +95,23 @@ namespace NewsPortal.WPF.ViewModels
 
             CreateArticleCommand = new DelegateCommand(param =>
             {
-                EditedArticle = new ArticleDTO();  // a szerkesztett épület új lesz
+                EditedArticle = new Article();  // a szerkesztett épület új lesz
                 OnArticleEditingStarted();
             });
 
             SaveArticleChangesCommand = new DelegateCommand(param => SaveArticleChanges());
             CancelArticleChangesCommand = new DelegateCommand(param => CancelArticleChanges());
 
-            UpdateArticleCommand = new DelegateCommand(param => UpdateArticle(param as ArticleDTO));
-            DeleteArticleCommand = new DelegateCommand(param => DeleteArticle(param as ArticleDTO));
+            UpdateArticleCommand = new DelegateCommand(param => UpdateArticle(param as Article));
+            DeleteArticleCommand = new DelegateCommand(param => DeleteArticle(param as Article));
 
             LoadCommand = new DelegateCommand(param => LoadAsync());
             SaveCommand = new DelegateCommand(param => SaveAsync());
             ExitCommand = new DelegateCommand(param => OnExitApplication());
             LogoutCommand = new DelegateCommand(param => OnLogoutApplication());
+
+            _model.ArticleChanged += Model_ArticleChanged;
+
 
             // Load data automatically
             LoadAsync();
@@ -158,7 +161,7 @@ namespace NewsPortal.WPF.ViewModels
             OnArticleEditingFinished();
         }
 
-        private void DeleteArticle(ArticleDTO article)
+        private void DeleteArticle(Article article)
         {
             if (article == null || !Articles.Contains(article))
                 return;
@@ -168,12 +171,12 @@ namespace NewsPortal.WPF.ViewModels
             _model.DeleteArticle(article);
         }
 
-        private void UpdateArticle(ArticleDTO article)
+        private void UpdateArticle(Article article)
         {
             if (article == null)
                 return;
 
-            EditedArticle = new ArticleDTO
+            EditedArticle = new Article
             {
                 Id = article.Id,
                 Author = article.Author,
@@ -182,7 +185,7 @@ namespace NewsPortal.WPF.ViewModels
                 Summary = article.Summary,
                 Text = article.Text,
                 Title = article.Title,
-                Userid = article.Userid
+                UserId = article.UserId
             };
 
             OnArticleEditingStarted();
@@ -193,7 +196,7 @@ namespace NewsPortal.WPF.ViewModels
             try
             {
                 await _model.LoadAsync();
-                Articles = new ObservableCollection<ArticleDTO>(_model.Articles);
+                Articles = new ObservableCollection<Article>(_model.Articles);
                 IsLoaded = true;
             }
             catch (PersistenceUnavailableException)

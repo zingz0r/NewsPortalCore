@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using NewsPortal.Data.DTO;
+using NewsPortal.Data.Entity;
 using NewsPortal.WPF.ViewModels.EventArgumentums;
 
 namespace NewsPortal.WPF.Models
@@ -12,16 +10,16 @@ namespace NewsPortal.WPF.Models
     {
         event EventHandler<ArticleChangedEventArgs> ArticleChanged;
 
-        void DeleteArticle(ArticleDTO article);
+        void DeleteArticle(Article article);
 
-        IReadOnlyList<ArticleDTO> Articles { get; }
+        IReadOnlyList<Article> Articles { get; }
 
-        void CreateArticle(ArticleDTO article);
-        void UpdateArticle(ArticleDTO article);
+        void CreateArticle(Article article);
+        void UpdateArticle(Article article);
 
         Task LoadAsync();
         Task SaveAsync();
-        Task<Boolean> LoginAsync(String userName, String userPassword);
-        Task<Boolean> LogoutAsync();
+        Task<bool> LoginAsync(string userName, string userPassword);
+        Task<bool> LogoutAsync();
     }
 }

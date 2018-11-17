@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using NewsPortal.Data.DTO;
+using NewsPortal.Data.Entity;
 using Newtonsoft.Json.Linq;
 
 namespace NewsPortal.WPF.Persistences
@@ -13,14 +11,12 @@ namespace NewsPortal.WPF.Persistences
     {
         private readonly HttpClient _client;
 
-        public AuthorDTO ActualUser { get; private set; }
-
         public NewsPortalPersistence(String baseAddress)
         {
-            _client = new HttpClient {BaseAddress = new Uri(baseAddress)};
+            _client = new HttpClient { BaseAddress = new Uri(baseAddress) };
         }
-
-        public async Task<IEnumerable<ArticleDTO>> ReadArticlesAsync()
+        
+        public async Task<IEnumerable<Article>> ReadArticlesAsync()
         {
             try
             {
@@ -28,7 +24,7 @@ namespace NewsPortal.WPF.Persistences
                 if (response.IsSuccessStatusCode)
                 {
                     // Microsoft.Extensions.Identity.Stores - has to be installed through nuget
-                    IEnumerable<ArticleDTO> articles = await response.Content.ReadAsAsync<IEnumerable<ArticleDTO>>();
+                    IEnumerable<Article> articles = await response.Content.ReadAsAsync<IEnumerable<Article>>();
 
                     return articles;
                 }
@@ -44,12 +40,12 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> CreateArticleAsync(ArticleDTO article)
+        public async Task<bool> CreateArticleAsync(Article article)
         {
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync("api/articles/", article); // az értékeket azonnal JSON formátumra alakítjuk
-                article.Id = (await response.Content.ReadAsAsync<ArticleDTO>()).Id; // a válaszüzenetben megkapjuk a végleges azonosítót
+                HttpResponseMessage response = await _client.PostAsJsonAsync("api/articles/", article); 
+                article.Id = (await response.Content.ReadAsAsync<Article>()).Id; 
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -58,11 +54,11 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> UpdateArticleAsync(ArticleDTO article)
+        public async Task<bool> UpdateArticleAsync(Article article)
         {
             try
             {
-                HttpResponseMessage response = await _client.PutAsJsonAsync("api/articles/", article);
+                HttpResponseMessage response = await _client.PutAsJsonAsync("api/articles/" + article.Id, article);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -71,7 +67,7 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> DeleteArticleAsync(ArticleDTO article)
+        public async Task<bool> DeleteArticleAsync(Article article)
         {
             try
             {
@@ -84,21 +80,24 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> LoginAsync(String userName, String userPassword)
+        public async Task<User> GetLoggedInUserInfo()
+        {
+            HttpResponseMessage response = await _client.GetAsync("api/account/currentuser");
+            return await response.Content.ReadAsAsync<User>();
+        }
+
+        public async Task<Boolean> LoginAsync(String userName, String userPassword)
         {
             try
             {
                 HttpResponseMessage response = await _client.GetAsync("api/account/login/" + userName + "/" + userPassword);
+                var serializedJson = JObject.Parse(await response.Content.ReadAsStringAsync());
 
-                if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode && serializedJson.ContainsKey("response"))
                 {
-                    // Microsoft.Extensions.Identity.Stores - has to be installed through nuget
-                        ActualUser = await response.Content.ReadAsAsync<AuthorDTO>();
-                        return true;
-                }
-                else
-                {
-                    throw new PersistenceUnavailableException("Service returned response: " + response.StatusCode);
+                    bool isSuccessfulyLoggedIn = serializedJson["response"].ToObject<bool>();
+
+                    return isSuccessfulyLoggedIn;
                 }
 
                 return false;
@@ -114,8 +113,7 @@ namespace NewsPortal.WPF.Persistences
             try
             {
                 HttpResponseMessage response = await _client.GetAsync("api/account/logout");
-
-                ActualUser = null;
+                
                 return !response.IsSuccessStatusCode;
             }
             catch (Exception ex)

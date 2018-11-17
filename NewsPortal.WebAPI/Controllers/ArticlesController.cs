@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +17,16 @@ namespace NewsPortal.WebAPI.Controllers
         private readonly NewsPortalContext _context;
         private readonly UserManager<User> _userManager;
 
-        public ArticlesController(NewsPortalContext context)
+        public ArticlesController(NewsPortalContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [HttpGet]
         public IEnumerable<Article> GetMyArticles()
         {
-            var user = _userManager.GetUserAsync(User).Result; ;
+            var user = _userManager.GetUserAsync(User).Result;
             return _context.Article.Where(x => x.UserId == user.Id).OrderByDescending(x => x.Date);
         }
 
@@ -94,10 +93,14 @@ namespace NewsPortal.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            // null the author to allow get it by userID
+            // instead itt will throw exception
+            article.Author = null;
+
             _context.Article.Add(article);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticle", new { id = article.Id }, article);
+            return CreatedAtAction("GetArticle", new { id = article.Id, }, article);
         }
 
         // DELETE: api/Articles/5

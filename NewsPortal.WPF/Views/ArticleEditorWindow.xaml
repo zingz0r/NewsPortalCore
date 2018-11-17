@@ -30,7 +30,7 @@
             <Label Content="Text" Margin="5" Grid.Row="2" />
             <TextBox TextWrapping="Wrap" Margin="5" Text="{Binding EditedArticle.Text, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" />
             <Label  Content="Featured" Margin="5" Grid.Row="4" />
-            <CheckBox IsChecked="{Binding Path=EditedArticle.IsFeatured, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="5" />
+            <CheckBox IsChecked="{Binding Path=EditedArticle.IsFeatured, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="5,10,5,5" Padding="0" />
             
             <StackPanel Grid.Row="6" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Right">
                 <Button Content="Save" Margin="6,5,0,5" Command="{Binding SaveArticleChangesCommand}" Width="100" />

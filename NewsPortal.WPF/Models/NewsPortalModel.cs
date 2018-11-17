@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NewsPortal.Data.DTO;
+using NewsPortal.Data.Entity;
 using NewsPortal.WPF.Persistences;
 using NewsPortal.WPF.ViewModels.EventArgumentums;
 
@@ -11,8 +11,8 @@ namespace NewsPortal.WPF.Models
     class NewsPortalModel : INewsPortalModel
     {
         private readonly INewsPortalPersistence _persistence;
-        private List<ArticleDTO> _articles;
-        private Dictionary<ArticleDTO, DataFlag> _articleFlags;
+        private List<Article> _articles;
+        private Dictionary<Article, DataFlag> _articleFlags;
 
         private enum DataFlag
         {
@@ -21,13 +21,13 @@ namespace NewsPortal.WPF.Models
             Delete
         }
 
-        public void DeleteArticle(ArticleDTO article)
+        public void DeleteArticle(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException(nameof(article));
 
             // keresés azonosító alapján
-            ArticleDTO articleToDelete = _articles.FirstOrDefault(b => b.Id == article.Id);
+            Article articleToDelete = _articles.FirstOrDefault(b => b.Id == article.Id);
 
             if (articleToDelete == null)
                 throw new ArgumentException("The article does not exist.", nameof(article));
@@ -41,24 +41,59 @@ namespace NewsPortal.WPF.Models
             _articles.Remove(articleToDelete);
         }
 
-        public IReadOnlyList<ArticleDTO> Articles => _articles;
+        public IReadOnlyList<Article> Articles => _articles;
 
-        public void CreateArticle(ArticleDTO article)
+        public async void CreateArticle(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException(nameof(article));
             if (_articles.Contains(article))
                 throw new ArgumentException("The article is already in the collection.", nameof(article));
 
-            article.Id = (_articles.Count > 0 ? _articles.Max(x => x.Id) : 0) + 1;
+            var userInfo = (await _persistence.GetLoggedInUserInfo());
+            
+
+            // this is bullshit but in travelagency it is like this
+            // if you delete the last article next create will get the same id and will not able to insert it into sql
+            // article.Id = (_articles.Count > 0 ? _articles.Max(x => x.Id) : 0) + 1;
+
+            article.Author = userInfo;
+            article.UserId = userInfo.Id;
+            article.Date = DateTime.Now;
 
             _articleFlags.Add(article, DataFlag.Create);
             _articles.Add(article);
+
+            OnArticleChanged(article.Id);
         }
 
-        public void UpdateArticle(ArticleDTO article)
+        public void UpdateArticle(Article article)
         {
-            throw new NotImplementedException();
+            if (article == null)
+                throw new ArgumentNullException(nameof(article));
+            
+            Article articleToModify = _articles.FirstOrDefault(x => x.Id == article.Id);
+
+            if (articleToModify == null)
+                throw new ArgumentException("The article does not exist.", nameof(article));
+
+            articleToModify.Title = article.Title;
+            articleToModify.Summary = article.Summary;
+            articleToModify.Text = article.Text;
+            articleToModify.Date = DateTime.Now;
+            articleToModify.IsFeatured = article.IsFeatured;
+
+
+            if (_articleFlags.ContainsKey(articleToModify) && _articleFlags[articleToModify] == DataFlag.Create)
+            {
+                _articleFlags[articleToModify] = DataFlag.Create;
+            }
+            else
+            {
+                _articleFlags[articleToModify] = DataFlag.Update;
+            }
+            
+            OnArticleChanged(article.Id);
         }
 
         public bool IsUserLoggedIn { get; private set; }
@@ -74,14 +109,14 @@ namespace NewsPortal.WPF.Models
         public async Task LoadAsync()
         {
             _articles = (await _persistence.ReadArticlesAsync()).ToList();
-            _articleFlags = new Dictionary<ArticleDTO, DataFlag>();
+            _articleFlags = new Dictionary<Article, DataFlag>();
         }
 
         public async Task SaveAsync()
         {
-            List<ArticleDTO> articlesToSave = _articleFlags.Keys.ToList();
+            List<Article> articlesToSave = _articleFlags.Keys.ToList();
 
-            foreach (ArticleDTO article in articlesToSave)
+            foreach (Article article in articlesToSave)
             {
                 bool result = true;
                 
@@ -106,13 +141,13 @@ namespace NewsPortal.WPF.Models
             }
         }
 
-        public async Task<Boolean> LoginAsync(String userName, String userPassword)
+        public async Task<bool> LoginAsync(string userName, string userPassword)
         {
             IsUserLoggedIn = await _persistence.LoginAsync(userName, userPassword);
             return IsUserLoggedIn;
         }
 
-        public async Task<Boolean> LogoutAsync()
+        public async Task<bool> LogoutAsync()
         {
             if (!IsUserLoggedIn)
                 return true;
@@ -120,6 +155,11 @@ namespace NewsPortal.WPF.Models
             IsUserLoggedIn = !(await _persistence.LogoutAsync());
 
             return IsUserLoggedIn;
+        }
+
+        private void OnArticleChanged(int articleId)
+        {
+            ArticleChanged?.Invoke(this, new ArticleChangedEventArgs { ArticleId = articleId });
         }
     }
 }
