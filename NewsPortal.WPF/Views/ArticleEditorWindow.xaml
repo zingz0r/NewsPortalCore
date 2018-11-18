@@ -27,9 +27,9 @@
             <Label Content="Title" Margin="5"/>
             <TextBox Margin="5" Text="{Binding EditedArticle.Title, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" />
             <Label Content="Summary" Margin="5" Grid.Row="1" />
-            <TextBox TextWrapping="Wrap" Margin="5" MaxLength="1000" Text="{Binding EditedArticle.Summary, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
+            <TextBox TextWrapping="Wrap" Margin="5" MaxLength="1000" Text="{Binding EditedArticle.Summary, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True"  Grid.Column="1" Grid.Row="1" />
             <Label Content="Text" Margin="5" Grid.Row="2" />
-            <TextBox TextWrapping="Wrap" Margin="5" Text="{Binding EditedArticle.Text, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" />
+            <TextBox TextWrapping="Wrap" Margin="5" Text="{Binding EditedArticle.Text, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True"  Grid.Column="1" Grid.Row="2" />
             <Label  Content="Featured" Margin="5" Grid.Row="4" />
             <CheckBox IsChecked="{Binding Path=EditedArticle.IsFeatured, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="5,10,5,5" Padding="0" />
             

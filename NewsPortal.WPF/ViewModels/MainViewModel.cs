@@ -164,6 +164,9 @@ namespace NewsPortal.WPF.ViewModels
 
         private void DeleteArticle(Article article)
         {
+            if (article == null)
+                return;
+
             ConfirmationMessageEventArgs confirmationMessage = new ConfirmationMessageEventArgs("Are you sure, you want to delete this article?");
             OnConfirmationMessageApplication(confirmationMessage);
 
