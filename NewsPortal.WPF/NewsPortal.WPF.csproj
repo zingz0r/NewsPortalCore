@@ -222,5 +222,8 @@
   <ItemGroup>
     <None Include="Resources\icon_addarticle.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Converters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
