@@ -34,7 +34,7 @@ namespace NewsPortal.WebAPI.Models
                 Email = "zingz0r@tothnet.hu",
                 PhoneNumber = "+36308307074",
             };
-            var zingPassword = "TestTest123";
+            var zingPassword = "Test123Test123";
             var zingRole = new IdentityRole<int>("administrator");
 
             var result1 = _userManager.CreateAsync(zingUser, zingPassword).Result;

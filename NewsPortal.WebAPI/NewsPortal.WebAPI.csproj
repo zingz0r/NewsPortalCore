@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistences\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NewsPortal.Data\NewsPortal.Data.csproj" />
   </ItemGroup>
 

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using NewsPortal.Data.DTO;
 using NewsPortal.WPF.ViewModels.BaseViewModel;
-using NewsPortal.Data.Entity;
 using NewsPortal.WPF.Models;
 using NewsPortal.WPF.Persistences;
 using NewsPortal.WPF.Resources;
@@ -17,9 +13,9 @@ namespace NewsPortal.WPF.ViewModels
     class MainViewModel : ViewModelBase
     {
         private readonly INewsPortalModel _model;
-        private ObservableCollection<Article> _articles;
+        private ObservableCollection<ArticleDTO> _articles;
         private bool _isLoaded;
-        private Article _selectedArticle;
+        private ArticleDTO _selectedArticle;
 
 
         public event EventHandler ArticleEditingStarted;
@@ -40,7 +36,7 @@ namespace NewsPortal.WPF.ViewModels
         public DelegateCommand LogoutCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
 
-        public ObservableCollection<Article> Articles
+        public ObservableCollection<ArticleDTO> Articles
         {
             get => _articles;
             private set
@@ -64,8 +60,8 @@ namespace NewsPortal.WPF.ViewModels
                 }
             }
         }
-        public Article EditedArticle { get; private set; }
-        public Article SelectedArticle
+        public ArticleDTO EditedArticle { get; private set; }
+        public ArticleDTO SelectedArticle
         {
             get { return _selectedArticle; }
             set
@@ -96,15 +92,15 @@ namespace NewsPortal.WPF.ViewModels
 
             CreateArticleCommand = new DelegateCommand(param =>
             {
-                EditedArticle = new Article();  // a szerkesztett épület új lesz
+                EditedArticle = new ArticleDTO();
                 OnArticleEditingStarted();
             });
 
             SaveArticleChangesCommand = new DelegateCommand(param => SaveArticleChanges());
             CancelArticleChangesCommand = new DelegateCommand(param => CancelArticleChanges());
 
-            UpdateArticleCommand = new DelegateCommand(param => UpdateArticle(param as Article));
-            DeleteArticleCommand = new DelegateCommand(param => DeleteArticle(param as Article));
+            UpdateArticleCommand = new DelegateCommand(param => UpdateArticle(param as ArticleDTO));
+            DeleteArticleCommand = new DelegateCommand(param => DeleteArticle(param as ArticleDTO));
 
             LoadCommand = new DelegateCommand(param => LoadAsync());
             SaveCommand = new DelegateCommand(param => SaveAsync());
@@ -162,7 +158,7 @@ namespace NewsPortal.WPF.ViewModels
             OnArticleEditingFinished();
         }
 
-        private void DeleteArticle(Article article)
+        private void DeleteArticle(ArticleDTO article)
         {
             if (article == null)
                 return;
@@ -178,12 +174,12 @@ namespace NewsPortal.WPF.ViewModels
             _model.DeleteArticle(article);
         }
 
-        private void UpdateArticle(Article article)
+        private void UpdateArticle(ArticleDTO article)
         {
             if (article == null)
                 return;
 
-            EditedArticle = new Article
+            EditedArticle = new ArticleDTO
             {
                 Id = article.Id,
                 Author = article.Author,
@@ -192,7 +188,8 @@ namespace NewsPortal.WPF.ViewModels
                 Summary = article.Summary,
                 Text = article.Text,
                 Title = article.Title,
-                UserId = article.UserId
+                UserId = article.UserId,
+                Images = article.Images
             };
 
             OnArticleEditingStarted();
@@ -203,7 +200,7 @@ namespace NewsPortal.WPF.ViewModels
             try
             {
                 await _model.LoadAsync();
-                Articles = new ObservableCollection<Article>(_model.Articles);
+                Articles = new ObservableCollection<ArticleDTO>(_model.Articles);
                 IsLoaded = true;
             }
             catch (PersistenceUnavailableException)

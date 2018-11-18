@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NewsPortal.WPF"
         mc:Ignorable="d"
         Title="News Portal - Administration" Icon="{Binding NewsPortalLogo}" WindowStartupLocation="CenterScreen" Height="550" Width="900">
     <Grid>
@@ -53,7 +52,7 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid Name="articlesGrid" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
+        <DataGrid Name="ArticlesGrid" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
             <!-- adatrács, amelynek megadjuk az oszlopait -->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding Title}" />

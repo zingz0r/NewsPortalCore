@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NewsPortal.Data.Entity;
+using NewsPortal.Data.DTO;
 using NewsPortal.WPF.Persistences;
 using NewsPortal.WPF.ViewModels.EventArgumentums;
 
@@ -11,8 +11,8 @@ namespace NewsPortal.WPF.Models
     class NewsPortalModel : INewsPortalModel
     {
         private readonly INewsPortalPersistence _persistence;
-        private List<Article> _articles;
-        private Dictionary<Article, DataFlag> _articleFlags;
+        private List<ArticleDTO> _articles;
+        private Dictionary<ArticleDTO, DataFlag> _articleFlags;
 
         private enum DataFlag
         {
@@ -21,13 +21,13 @@ namespace NewsPortal.WPF.Models
             Delete
         }
 
-        public void DeleteArticle(Article article)
+        public void DeleteArticle(ArticleDTO article)
         {
             if (article == null)
                 throw new ArgumentNullException(nameof(article));
 
             // keresés azonosító alapján
-            Article articleToDelete = _articles.FirstOrDefault(b => b.Id == article.Id);
+            ArticleDTO articleToDelete = _articles.FirstOrDefault(b => b.Id == article.Id);
 
             if (articleToDelete == null)
                 throw new ArgumentException("The article does not exist.", nameof(article));
@@ -41,9 +41,9 @@ namespace NewsPortal.WPF.Models
             _articles.Remove(articleToDelete);
         }
 
-        public IReadOnlyList<Article> Articles => _articles;
+        public IReadOnlyList<ArticleDTO> Articles => _articles;
 
-        public async void CreateArticle(Article article)
+        public async void CreateArticle(ArticleDTO article)
         {
             if (article == null)
                 throw new ArgumentNullException(nameof(article));
@@ -67,12 +67,12 @@ namespace NewsPortal.WPF.Models
             OnArticleChanged(article.Id);
         }
 
-        public void UpdateArticle(Article article)
+        public void UpdateArticle(ArticleDTO article)
         {
             if (article == null)
                 throw new ArgumentNullException(nameof(article));
-            
-            Article articleToModify = _articles.FirstOrDefault(x => x.Id == article.Id);
+
+            ArticleDTO articleToModify = _articles.FirstOrDefault(x => x.Id == article.Id);
 
             if (articleToModify == null)
                 throw new ArgumentException("The article does not exist.", nameof(article));
@@ -109,14 +109,14 @@ namespace NewsPortal.WPF.Models
         public async Task LoadAsync()
         {
             _articles = (await _persistence.ReadArticlesAsync()).ToList();
-            _articleFlags = new Dictionary<Article, DataFlag>();
+            _articleFlags = new Dictionary<ArticleDTO, DataFlag>();
         }
 
         public async Task SaveAsync()
         {
-            List<Article> articlesToSave = _articleFlags.Keys.ToList();
+            List<ArticleDTO> articlesToSave = _articleFlags.Keys.ToList();
 
-            foreach (Article article in articlesToSave)
+            foreach (ArticleDTO article in articlesToSave)
             {
                 bool result = true;
                 

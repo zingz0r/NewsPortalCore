@@ -26,7 +26,7 @@ namespace NewsPortal.WebAPI.Controllers
         [HttpGet("currentUser")]
         public async Task<User> CurrentUser()
         {
-            ClaimsPrincipal currentUser = this.User;
+            ClaimsPrincipal currentUser = User;
             return await _context.Users.FirstAsync(x => x.UserName == currentUser.Identity.Name);
         }
 

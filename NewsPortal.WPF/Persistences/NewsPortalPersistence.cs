@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using NewsPortal.Data.DTO;
 using NewsPortal.Data.Entity;
 using Newtonsoft.Json.Linq;
 
@@ -16,7 +18,7 @@ namespace NewsPortal.WPF.Persistences
             _client = new HttpClient { BaseAddress = new Uri(baseAddress) };
         }
         
-        public async Task<IEnumerable<Article>> ReadArticlesAsync()
+        public async Task<IEnumerable<ArticleDTO>> ReadArticlesAsync()
         {
             try
             {
@@ -24,9 +26,19 @@ namespace NewsPortal.WPF.Persistences
                 if (response.IsSuccessStatusCode)
                 {
                     // Microsoft.Extensions.Identity.Stores - has to be installed through nuget
-                    IEnumerable<Article> articles = await response.Content.ReadAsAsync<IEnumerable<Article>>();
+                    IEnumerable<ArticleDTO> articles = await response.Content.ReadAsAsync<IEnumerable<ArticleDTO>>();
 
-                    return articles;
+                    var readArticlesAsync = articles as ArticleDTO[] ?? articles.ToArray();
+                    foreach (ArticleDTO article in readArticlesAsync)
+                    {
+                        response = await _client.GetAsync("api/pictures/" + article.Id);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            article.Images = (await response.Content.ReadAsAsync<IEnumerable<Picture>>()).ToList();
+                        }
+                    }
+
+                    return readArticlesAsync;
                 }
                 else
                 {
@@ -40,12 +52,12 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> CreateArticleAsync(Article article)
+        public async Task<bool> CreateArticleAsync(ArticleDTO article)
         {
             try
             {
                 HttpResponseMessage response = await _client.PostAsJsonAsync("api/articles/", article); 
-                article.Id = (await response.Content.ReadAsAsync<Article>()).Id; 
+                article.Id = (await response.Content.ReadAsAsync<ArticleDTO>()).Id; 
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -54,7 +66,7 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> UpdateArticleAsync(Article article)
+        public async Task<bool> UpdateArticleAsync(ArticleDTO article)
         {
             try
             {
@@ -67,7 +79,7 @@ namespace NewsPortal.WPF.Persistences
             }
         }
 
-        public async Task<bool> DeleteArticleAsync(Article article)
+        public async Task<bool> DeleteArticleAsync(ArticleDTO article)
         {
             try
             {

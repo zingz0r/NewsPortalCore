@@ -3,9 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NewsPortal.WPF.Views"
-        xmlns:properties="clr-namespace:NewsPortal.WPF.Properties"
-        xmlns:wpf="clr-namespace:NewsPortal.WPF"
         mc:Ignorable="d"
         Title="News Portal - Login" Height="200" Width="445"  WindowStartupLocation="CenterScreen" UseLayoutRounding="False" MinWidth="450" MinHeight="200" MaxWidth="450" MaxHeight="200" Icon="{Binding LockImage}">
     <Window.InputBindings>
@@ -27,6 +24,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
         <!--Header Image -->
         <!--<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Source="{Binding LoginImage}" />-->
 

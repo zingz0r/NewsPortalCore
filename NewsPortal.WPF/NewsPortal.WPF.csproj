@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="ViewModels\BaseViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModels\Converters\ImageConverter.cs" />
     <Compile Include="ViewModels\EventArgumentums\ArticleChangedEventArgs.cs" />
     <Compile Include="ViewModels\EventArgumentums\ConfirmationMessageEventArgs.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -222,8 +223,6 @@
   <ItemGroup>
     <None Include="Resources\icon_addarticle.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
