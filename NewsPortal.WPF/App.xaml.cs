@@ -37,6 +37,7 @@ namespace NewsPortal.WPF
             _loginViewModel.LoginSuccess += new EventHandler(ViewModel_LoginSuccess);
             _loginViewModel.LoginFailed += new EventHandler(ViewModel_LoginFailed);
             _loginViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
+            _loginViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
 
             _loginView = new LoginWindow();
             _loginView.DataContext = _loginViewModel;
@@ -74,6 +75,8 @@ namespace NewsPortal.WPF
                 _loginViewModel.LoginSuccess += new EventHandler(ViewModel_LoginSuccess);
                 _loginViewModel.LoginFailed += new EventHandler(ViewModel_LoginFailed);
                 _loginViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
+                _loginViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
+
             }
 
             if (_loginView == null)
@@ -93,6 +96,8 @@ namespace NewsPortal.WPF
             _mainViewModel.ArticleEditingFinished += new EventHandler(MainViewModel_ArticleEditingFinished);
             _mainViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
             _mainViewModel.LogoutApplication += new EventHandler(ViewModel_LogoutApplication);
+            _mainViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
+
 
             if (_mainView == null)
                 _mainView = new MainWindow();
@@ -123,5 +128,15 @@ namespace NewsPortal.WPF
             MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 
         }
+        private void ViewModel_ConfirmationMessageInvoked(object sender, ConfirmationMessageEventArgs e)
+        {
+            var result = MessageBox.Show(e.Message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+        
     }
 }

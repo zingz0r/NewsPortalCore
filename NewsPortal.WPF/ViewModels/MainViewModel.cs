@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using NewsPortal.WPF.ViewModels.BaseViewModel;
 using NewsPortal.Data.Entity;
 using NewsPortal.WPF.Models;
@@ -163,7 +164,10 @@ namespace NewsPortal.WPF.ViewModels
 
         private void DeleteArticle(Article article)
         {
-            if (article == null || !Articles.Contains(article))
+            ConfirmationMessageEventArgs confirmationMessage = new ConfirmationMessageEventArgs("Are you sure, you want to delete this article?");
+            OnConfirmationMessageApplication(confirmationMessage);
+
+            if (confirmationMessage.Cancel)
                 return;
 
             Articles.Remove(article);

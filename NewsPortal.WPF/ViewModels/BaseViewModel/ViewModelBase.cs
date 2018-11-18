@@ -9,6 +9,7 @@ namespace NewsPortal.WPF.ViewModels.BaseViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<MessageEventArgs> MessageApplication;
+        public event EventHandler<ConfirmationMessageEventArgs> ConfirmationMessageApplication;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -19,5 +20,11 @@ namespace NewsPortal.WPF.ViewModels.BaseViewModel
         {
             MessageApplication?.Invoke(this, new MessageEventArgs(message));
         }
+
+        protected void OnConfirmationMessageApplication(ConfirmationMessageEventArgs eventArg)
+        {
+            ConfirmationMessageApplication?.Invoke(this, eventArg);
+        }
+
     }
 }
