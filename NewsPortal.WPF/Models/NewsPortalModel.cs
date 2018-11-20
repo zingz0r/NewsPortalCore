@@ -51,6 +51,11 @@ namespace NewsPortal.WPF.Models
             article.UserId = userInfo.Id;
             article.Date = DateTime.Now;
 
+            if (article.Images == null)
+            {
+                article.Images = new ObservableCollection<PictureDTO>();
+            }
+
             // create article
             if (await _persistence.CreateArticleAsync(article))
             {
@@ -60,7 +65,7 @@ namespace NewsPortal.WPF.Models
                     // create images
                     if (await _persistence.CreateArticleImageAsync(image))
                     {
-
+                        article.Images.Add(image);
                     }
                     else
                     {
@@ -77,12 +82,11 @@ namespace NewsPortal.WPF.Models
             }
         }
 
-
         public async void DeleteArticle(ArticleDTO article)
         {
             if (article == null)
                 throw new ArgumentNullException(nameof(article));
-            
+
             ArticleDTO articleToDelete = _articles.FirstOrDefault(b => b.Id == article.Id);
 
             if (articleToDelete == null)
@@ -137,7 +141,7 @@ namespace NewsPortal.WPF.Models
                 }
             }
 
-            foreach(var flag in deleteImageFlags)
+            foreach (var flag in deleteImageFlags)
                 if (flag.Value == DataFlag.Delete)
                     articleToModify.Images.Remove(flag.Key);
 
@@ -150,24 +154,30 @@ namespace NewsPortal.WPF.Models
                     image.ArticleId = articleToModify.Id;
                     if (await _persistence.CreateArticleImageAsync(image))
                     {
-                        deleteImageFlags.Add(image, DataFlag.Create);
+                        addImageFlags.Add(image, DataFlag.Create);
                     }
                     else
                     {
                         throw new InvalidOperationException("Failed to create image " + image.Id);
                     }
                 }
-
-                if (await _persistence.UpdateArticleAsync(articleToModify))
-                {
-
-                }
             }
-            foreach (var flag in deleteImageFlags)
+            foreach (var flag in addImageFlags)
                 if (flag.Value == DataFlag.Create)
                     articleToModify.Images.Add(flag.Key);
 
-            OnArticleChanged(editArticle.Id);
+
+            if (await _persistence.UpdateArticleAsync(articleToModify))
+            {
+
+            }
+            else
+            {
+                throw new InvalidOperationException("Failed to update article " + articleToModify.Id);
+
+            }
+
+            OnArticleChanged(articleToModify.Id);
         }
 
         public bool IsUserLoggedIn { get; private set; }
@@ -191,6 +201,8 @@ namespace NewsPortal.WPF.Models
 
         public async Task<bool> LogoutAsync()
         {
+            _articles.Clear();
+
             if (!IsUserLoggedIn)
                 return true;
 

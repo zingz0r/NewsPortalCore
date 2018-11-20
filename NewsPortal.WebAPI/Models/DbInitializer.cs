@@ -43,12 +43,12 @@ namespace NewsPortal.WebAPI.Models
 
             var testUser = new User
             {
-                UserName = "test1",
+                UserName = "testJanos",
                 Name = "Teszt János",
                 Email = "testjano@tothnet.hu",
                 PhoneNumber = "+36304856585",
             };
-            var testPassword = "TestTest123";
+            var testPassword = "Test123Test123";
             var testRole = new IdentityRole<int>("administrator");
 
             var result4 = _userManager.CreateAsync(testUser, testPassword).Result;

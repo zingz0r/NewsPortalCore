@@ -23,6 +23,7 @@ namespace NewsPortal.WPF
         private LoginWindow _loginView;
         public MainWindow _mainView;
         private ArticleEditorWindow _editorView;
+        private NewsPortalPersistence _persistance;
 
         public App()
         {
@@ -32,16 +33,21 @@ namespace NewsPortal.WPF
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            _model = new NewsPortalModel(new NewsPortalPersistence("http://localhost:2802/"));
+            CreateLoginInstance();
+        }
+
+        private void CreateLoginInstance()
+        {
+            _persistance = new NewsPortalPersistence("http://localhost:2802/");
+            _model = new NewsPortalModel(_persistance);
 
             _loginViewModel = new LoginViewModel(_model);
             _loginViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
             _loginViewModel.LoginSuccess += new EventHandler(ViewModel_LoginSuccess);
             _loginViewModel.LoginFailed += new EventHandler(ViewModel_LoginFailed);
             _loginViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
-            _loginViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
 
-            _loginView = new LoginWindow();
+                _loginView = new LoginWindow();
             _loginView.DataContext = _loginViewModel;
             _loginView.Show();
         }
@@ -69,25 +75,9 @@ namespace NewsPortal.WPF
                 await _model.LogoutAsync();
             }
 
-            _mainView?.Hide();
-            if (_loginViewModel == null)
-            {
-                _loginViewModel = new LoginViewModel(_model);
-                _loginViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
-                _loginViewModel.LoginSuccess += new EventHandler(ViewModel_LoginSuccess);
-                _loginViewModel.LoginFailed += new EventHandler(ViewModel_LoginFailed);
-                _loginViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
-                _loginViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
+            CreateLoginInstance();
 
-            }
-
-            if (_loginView == null)
-            {
-                _loginView = new LoginWindow();
-                _loginView.DataContext = _loginViewModel;
-            }
-
-            _loginView.Show();
+            _mainView?.Close();
         }
 
         private void ViewModel_LoginSuccess(object sender, EventArgs e)
@@ -103,14 +93,12 @@ namespace NewsPortal.WPF
 
             _mainViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
             _mainViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
-
-
-            if (_mainView == null)
-                _mainView = new MainWindow();
+            
+            _mainView = new MainWindow();
             _mainView.DataContext = _mainViewModel;
             _mainView?.Show();
 
-            _loginView.Hide();
+            _loginView.Close();
         }
 
         private void MainViewModel_ArticleEditingStarted(object sender, EventArgs e)
