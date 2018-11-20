@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Data;
 using NewsPortal.Data.DTO;
 using NewsPortal.WPF.ViewModels.BaseViewModel;
 using NewsPortal.WPF.Models;
@@ -13,26 +14,29 @@ namespace NewsPortal.WPF.ViewModels
     class MainViewModel : ViewModelBase
     {
         private readonly INewsPortalModel _model;
+
         private ObservableCollection<ArticleDTO> _articles;
+
         private bool _isLoaded;
         private ArticleDTO _selectedArticle;
-
 
         public event EventHandler ArticleEditingStarted;
         public event EventHandler ArticleEditingFinished;
         public event EventHandler ExitApplication;
         public event EventHandler LogoutApplication;
+        public event EventHandler<ImageEventArgs> ImageEditingStarted;
 
         public DelegateCommand SaveArticleChangesCommand { get; private set; }
         public DelegateCommand CancelArticleChangesCommand { get; private set; }
-
 
         public DelegateCommand CreateArticleCommand { get; private set; }
         public DelegateCommand UpdateArticleCommand { get; set; }
         public DelegateCommand DeleteArticleCommand { get; set; }
 
+        public DelegateCommand CreateImageCommand { get; set; }
+        public DelegateCommand DeleteImageCommand { get; set; }
+        
         public DelegateCommand LoadCommand { get; private set; }
-        public DelegateCommand SaveCommand { get; private set; }
         public DelegateCommand LogoutCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
 
@@ -48,6 +52,7 @@ namespace NewsPortal.WPF.ViewModels
                 }
             }
         }
+
         public bool IsLoaded
         {
             get { return _isLoaded; }
@@ -61,9 +66,8 @@ namespace NewsPortal.WPF.ViewModels
             }
         }
         public ArticleDTO EditedArticle { get; private set; }
-        public ArticleDTO SelectedArticle
-        {
-            get { return _selectedArticle; }
+        public ArticleDTO SelectedArticle {
+            get => _selectedArticle;
             set
             {
                 if (_selectedArticle != value)
@@ -93,22 +97,25 @@ namespace NewsPortal.WPF.ViewModels
             CreateArticleCommand = new DelegateCommand(param =>
             {
                 EditedArticle = new ArticleDTO();
+                EditedArticle.Images = new ObservableCollection<PictureDTO>();
+
                 OnArticleEditingStarted();
             });
 
             SaveArticleChangesCommand = new DelegateCommand(param => SaveArticleChanges());
             CancelArticleChangesCommand = new DelegateCommand(param => CancelArticleChanges());
 
-            UpdateArticleCommand = new DelegateCommand(param => UpdateArticle(param as ArticleDTO));
+            UpdateArticleCommand = new DelegateCommand(param => EditArticle(param as ArticleDTO));
             DeleteArticleCommand = new DelegateCommand(param => DeleteArticle(param as ArticleDTO));
 
+            CreateImageCommand = new DelegateCommand(param => OnImageEditingStarted((param as ArticleDTO).Id));
+            DeleteImageCommand = new DelegateCommand(param => DeleteImage(param as PictureDTO));
+
             LoadCommand = new DelegateCommand(param => LoadAsync());
-            SaveCommand = new DelegateCommand(param => SaveAsync());
             ExitCommand = new DelegateCommand(param => OnExitApplication());
             LogoutCommand = new DelegateCommand(param => OnLogoutApplication());
 
             _model.ArticleChanged += Model_ArticleChanged;
-
 
             // Load data automatically
             LoadAsync();
@@ -117,21 +124,27 @@ namespace NewsPortal.WPF.ViewModels
         private void SaveArticleChanges()
         {
             // validations
-            if (String.IsNullOrEmpty(EditedArticle.Title))
+            if (string.IsNullOrEmpty(EditedArticle.Title))
             {
                 OnMessageApplication("Title can't be empty!");
                 return;
             }
 
-            if (String.IsNullOrEmpty(EditedArticle.Summary))
+            if (string.IsNullOrEmpty(EditedArticle.Summary))
             {
                 OnMessageApplication("Summary can't be empty!");
                 return;
             }
 
-            if (String.IsNullOrEmpty(EditedArticle.Text))
+            if (string.IsNullOrEmpty(EditedArticle.Text))
             {
                 OnMessageApplication("Text can't be empty!");
+                return;
+            }
+
+            if (EditedArticle.IsFeatured && EditedArticle.Images.Count == 0)
+            {
+                OnMessageApplication("At least one image has to be uploaded!");
                 return;
             }
 
@@ -140,6 +153,7 @@ namespace NewsPortal.WPF.ViewModels
             {
                 _model.CreateArticle(EditedArticle);
                 Articles.Add(EditedArticle);
+
                 SelectedArticle = EditedArticle;
             }
             else // if already exists
@@ -147,6 +161,7 @@ namespace NewsPortal.WPF.ViewModels
                 _model.UpdateArticle(EditedArticle);
             }
 
+            EditedArticle.Images = null;
             EditedArticle = null;
 
             OnArticleEditingFinished();
@@ -154,7 +169,9 @@ namespace NewsPortal.WPF.ViewModels
 
         private void CancelArticleChanges()
         {
+            EditedArticle.Images = null;
             EditedArticle = null;
+            
             OnArticleEditingFinished();
         }
 
@@ -174,24 +191,13 @@ namespace NewsPortal.WPF.ViewModels
             _model.DeleteArticle(article);
         }
 
-        private void UpdateArticle(ArticleDTO article)
+        private void EditArticle(ArticleDTO article)
         {
             if (article == null)
                 return;
 
-            EditedArticle = new ArticleDTO
-            {
-                Id = article.Id,
-                Author = article.Author,
-                Date = article.Date,
-                IsFeatured = article.IsFeatured,
-                Summary = article.Summary,
-                Text = article.Text,
-                Title = article.Title,
-                UserId = article.UserId,
-                Images = article.Images
-            };
-
+            EditedArticle = new ArticleDTO(article.Clone() as ArticleDTO);
+            
             OnArticleEditingStarted();
         }
 
@@ -209,19 +215,6 @@ namespace NewsPortal.WPF.ViewModels
             }
         }
 
-        private async void SaveAsync()
-        {
-            try
-            {
-                await _model.SaveAsync();
-                OnMessageApplication("Successfully saved!");
-            }
-            catch (PersistenceUnavailableException)
-            {
-                OnMessageApplication("Can't save data! No connection to the api.");
-            }
-        }
-
         private void Model_ArticleChanged(object sender, ArticleChangedEventArgs e)
         {
             int index = Articles.IndexOf(Articles.FirstOrDefault(x => x.Id == e.ArticleId));
@@ -229,6 +222,7 @@ namespace NewsPortal.WPF.ViewModels
             Articles.Insert(index, _model.Articles[index]);
 
             SelectedArticle = Articles[index];
+            EditedArticle = Articles[index];
         }
 
         private void OnExitApplication()
@@ -249,6 +243,27 @@ namespace NewsPortal.WPF.ViewModels
         private void OnArticleEditingFinished()
         {
             ArticleEditingFinished?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnImageEditingStarted(int articleId)
+        {
+            var imageEventArgs = new ImageEventArgs();
+            ImageEditingStarted?.Invoke(this, imageEventArgs);
+
+            var newImage = new PictureDTO()
+            {
+                LargeImageData = imageEventArgs.LargeImageData,
+                SmallImageData = imageEventArgs.SmallImageData,
+            };
+
+            EditedArticle.Images.Add(newImage);
+        }
+
+        private void DeleteImage(PictureDTO image)
+        {
+            if (image == null)
+                return;
+            EditedArticle.Images.Remove(image);
         }
     }
 }

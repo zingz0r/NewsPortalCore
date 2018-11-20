@@ -125,6 +125,8 @@
     <Compile Include="ViewModels\Converters\ImageConverter.cs" />
     <Compile Include="ViewModels\EventArgumentums\ArticleChangedEventArgs.cs" />
     <Compile Include="ViewModels\EventArgumentums\ConfirmationMessageEventArgs.cs" />
+    <Compile Include="ViewModels\EventArgumentums\ImageEventArgs.cs" />
+    <Compile Include="ViewModels\Helpers\ImageHelper.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\EventArgumentums\MessageEventArgs.cs" />
     <Compile Include="ViewModels\BaseViewModel\ViewModelBase.cs" />

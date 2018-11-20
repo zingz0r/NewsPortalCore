@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewsPortal.Data.DTO;
+using NewsPortal.Data.Entity;
 using NewsPortal.WPF.ViewModels.EventArgumentums;
 
 namespace NewsPortal.WPF.Models
@@ -15,10 +16,8 @@ namespace NewsPortal.WPF.Models
         IReadOnlyList<ArticleDTO> Articles { get; }
 
         void CreateArticle(ArticleDTO article);
-        void UpdateArticle(ArticleDTO article);
-
+        void UpdateArticle(ArticleDTO editedArticle);
         Task LoadAsync();
-        Task SaveAsync();
         Task<bool> LoginAsync(string userName, string userPassword);
         Task<bool> LogoutAsync();
     }

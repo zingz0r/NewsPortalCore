@@ -24,6 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
 
@@ -38,8 +39,8 @@
             <Label  Content="Featured" Margin="5" Grid.Row="4" Grid.Column="0" />
             <CheckBox IsChecked="{Binding Path=EditedArticle.IsFeatured, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="5,10,5,5" Padding="0" />
 
-            <Label Content="Title" Margin="5" Grid.Row="5" Grid.Column="0"/>
-            <ListBox Grid.Row="5" Grid.Column="1" Name="ImageListBox" ItemsSource="{Binding EditedArticle.Images}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <Label Content="Images" Margin="5" Grid.Row="5" Grid.Column="0"/>
+            <ListBox Grid.Row="5" Grid.Column="1" Name="ImageListBox" ItemsSource="{Binding EditedArticle.Images, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel IsItemsHost="True" />
@@ -47,16 +48,23 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Image Height="100" Width="Auto" Source="{Binding SmallImageData, Converter={StaticResource ImageConverter}}" />
+                        <Image Height="100" Width="Auto" Source="{Binding SmallImageData, Converter={StaticResource ImageConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <StackPanel Grid.Row="7" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Column="0"
+            <StackPanel HorizontalAlignment="Right" Grid.Row="6" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Button Grid.Row="0" Grid.Column="1" Content="Add new image" Margin="6,5,0,5" Command="{Binding CreateImageCommand}" CommandParameter="{Binding EditedArticle}" HorizontalAlignment="Right" Width="120" IsEnabled="{Binding IsLoaded}" />
+                <Button Grid.Row="0" Grid.Column="2" Content="Delete selected image" Margin="6,5,6,5" Command="{Binding DeleteImageCommand}" CommandParameter="{Binding ElementName=ImageListBox, Path=SelectedItem}" HorizontalAlignment="Right" Width="120" IsEnabled="{Binding IsLoaded}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="8" Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Column="0"
                         HorizontalAlignment="Right">
                 <Button Content="Save" Margin="6,5,0,5" Command="{Binding SaveArticleChangesCommand}" Width="100" />
                 <Button Content="Cancel" Margin="5,5,6,5" Command="{Binding CancelArticleChangesCommand}" Width="100" />
             </StackPanel>
+
+
         </Grid>
     </Grid>
 </Window>

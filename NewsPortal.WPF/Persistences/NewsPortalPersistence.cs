@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace NewsPortal.WPF.Persistences
                         response = await _client.GetAsync("api/pictures/" + article.Id);
                         if (response.IsSuccessStatusCode)
                         {
-                            article.Images = (await response.Content.ReadAsAsync<IEnumerable<Picture>>()).ToList();
+                            article.Images = new ObservableCollection<PictureDTO>((await response.Content.ReadAsAsync<IEnumerable<PictureDTO>>()).ToList());
                         }
                     }
 
@@ -84,6 +85,36 @@ namespace NewsPortal.WPF.Persistences
             try
             {
                 HttpResponseMessage response = await _client.DeleteAsync("api/articles/" + article.Id);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new PersistenceUnavailableException(ex);
+            }
+        }
+
+        public async Task<bool> CreateArticleImageAsync(PictureDTO image)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.PostAsJsonAsync("api/pictures/", image);
+                if (response.IsSuccessStatusCode)
+                {
+                    image.Id = (await response.Content.ReadAsAsync<Picture>()).Id;
+                }
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new PersistenceUnavailableException(ex);
+            }
+        }
+
+        public async Task<bool> DeleteArticleImageAsync(PictureDTO image)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.DeleteAsync("api/pictures/" + image.Id);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)

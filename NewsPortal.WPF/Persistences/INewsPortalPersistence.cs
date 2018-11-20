@@ -8,11 +8,18 @@ namespace NewsPortal.WPF.Persistences
     public interface INewsPortalPersistence
     {
         Task<IEnumerable<ArticleDTO>> ReadArticlesAsync();
+
         Task<bool> CreateArticleAsync(ArticleDTO article);
         Task<bool> UpdateArticleAsync(ArticleDTO article);
         Task<bool> DeleteArticleAsync(ArticleDTO article);
+
+        Task<bool> CreateArticleImageAsync(PictureDTO image);
+        Task<bool> DeleteArticleImageAsync(PictureDTO image);
+
+
         Task<User> GetLoggedInUserInfo();
         Task<bool> LoginAsync(string userName, string userPassword);
         Task<bool> LogoutAsync();
+
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows;
+using Microsoft.Win32;
 using NewsPortal.WPF.Models;
 using NewsPortal.WPF.Persistences;
 using NewsPortal.WPF.ViewModels;
 using NewsPortal.WPF.ViewModels.EventArgumentums;
+using NewsPortal.WPF.ViewModels.Helpers;
 using NewsPortal.WPF.Views;
 
 namespace NewsPortal.WPF
@@ -91,11 +93,15 @@ namespace NewsPortal.WPF
         private void ViewModel_LoginSuccess(object sender, EventArgs e)
         {
             _mainViewModel = new MainViewModel(_model);
-            _mainViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
+
             _mainViewModel.ArticleEditingStarted += new EventHandler(MainViewModel_ArticleEditingStarted);
             _mainViewModel.ArticleEditingFinished += new EventHandler(MainViewModel_ArticleEditingFinished);
+            _mainViewModel.ImageEditingStarted += new EventHandler<ImageEventArgs>(MainViewModel_ImageEditingStarted);
+
             _mainViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
             _mainViewModel.LogoutApplication += new EventHandler(ViewModel_LogoutApplication);
+
+            _mainViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
             _mainViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
 
 
@@ -116,6 +122,28 @@ namespace NewsPortal.WPF
         private void MainViewModel_ArticleEditingFinished(object sender, EventArgs e)
         {
             _editorView.Close();
+        }
+
+        private void MainViewModel_ImageEditingStarted(object sender, ImageEventArgs e)
+        {
+            try
+            {
+                var dialog = new OpenFileDialog
+                {
+                    CheckFileExists = true,
+                    Filter = "Image Files|*.jpg;*.jpeg;*.bmp;*.tif;*.gif;*.png;",
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+                };
+
+                var result = dialog.ShowDialog();
+
+                if (result == true)
+                {
+                    e.LargeImageData = ImageHelper.OpenAndResize(dialog.FileName, 600);
+                    e.SmallImageData = ImageHelper.OpenAndResize(dialog.FileName, 100);
+                }
+            }
+            catch { }
         }
 
         private static void ViewModel_LoginFailed(object sender, EventArgs e)
