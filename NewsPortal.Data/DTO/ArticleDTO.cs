@@ -7,10 +7,6 @@ namespace NewsPortal.Data.DTO
 {
     public class ArticleDTO : ICloneable
     {
-        public ArticleDTO()
-        {
-            
-        }
 
         public ArticleDTO(ArticleDTO other)
         {
@@ -25,6 +21,11 @@ namespace NewsPortal.Data.DTO
             Images = other.Images;
         }
 
+        public ArticleDTO()
+        {
+            Images = new ObservableCollection<PictureDTO>();
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string Summary { get; set; }
@@ -34,6 +35,7 @@ namespace NewsPortal.Data.DTO
         public int UserId { get; set; }
         public User Author { get; set; }
         public ObservableCollection<PictureDTO> Images { get; set; }
+
 
         public object Clone()
         {
@@ -51,6 +53,40 @@ namespace NewsPortal.Data.DTO
             }
             return clonedItem ?? throw new InvalidOperationException();
 
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (obj is ArticleDTO dto) && Id == dto.Id;
+        }
+
+        public static ArticleDTO ConvertArticleToDTO(Article article)
+        {
+            return new ArticleDTO
+            {
+                Id = article.Id,
+                Title = article.Title,
+                Summary = article.Summary,
+                Text = article.Text,
+                IsFeatured = article.IsFeatured,
+                Date = article.Date,
+                UserId = article.UserId,
+                Author = article.Author
+            };
+        }
+        public static Article ConvertDTOToArticle(ArticleDTO article)
+        {
+            return new Article
+            {
+                Id = article.Id,
+                Title = article.Title,
+                Summary = article.Summary,
+                Text = article.Text,
+                IsFeatured = article.IsFeatured,
+                Date = article.Date,
+                UserId = article.UserId,
+                Author = article.Author
+            };
         }
     }
 }

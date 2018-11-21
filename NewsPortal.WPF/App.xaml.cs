@@ -127,8 +127,8 @@ namespace NewsPortal.WPF
 
                 if (result == true)
                 {
-                    e.LargeImageData = ImageHelper.OpenAndResize(dialog.FileName, 600);
-                    e.SmallImageData = ImageHelper.OpenAndResize(dialog.FileName, 100);
+                    e.LargeImageData = ImageHelper.OpenAndResize(dialog.FileName, 700);
+                    e.SmallImageData = ImageHelper.OpenAndResize(dialog.FileName, 350);
                 }
             }
             catch { }

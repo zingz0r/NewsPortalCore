@@ -11,17 +11,17 @@
     <h4>Picture</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.LargeImageData)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LargeImageData)
-        </dd>
+            <img src="@Url.Action("GetImage", "Manager", new { id = Model.Id, isLarge = true })" class="img-thumbnail">
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.SmallImageData)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SmallImageData)
+            <img src="@Url.Action("GetImage", "Manager", new { id = Model.Id, isLarge = false })" class="img-thumbnail">
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Article)

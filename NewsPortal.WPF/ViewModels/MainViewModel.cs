@@ -97,7 +97,6 @@ namespace NewsPortal.WPF.ViewModels
             CreateArticleCommand = new DelegateCommand(param =>
             {
                 EditedArticle = new ArticleDTO();
-                EditedArticle.Images = new ObservableCollection<PictureDTO>();
 
                 OnArticleEditingStarted();
             });

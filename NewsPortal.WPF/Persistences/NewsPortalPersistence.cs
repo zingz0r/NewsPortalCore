@@ -57,8 +57,8 @@ namespace NewsPortal.WPF.Persistences
         {
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync("api/articles/", article); 
-                article.Id = (await response.Content.ReadAsAsync<ArticleDTO>()).Id; 
+                HttpResponseMessage response = await _client.PostAsJsonAsync("api/articles/", article);
+                article.Id = (await response.Content.ReadAsAsync<ArticleDTO>()).Id;
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
