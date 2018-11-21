@@ -152,6 +152,9 @@ namespace NewsPortal.WPF.Models
                 if (!articleToModify.Images.Contains(image))
                 {
                     image.ArticleId = articleToModify.Id;
+
+
+
                     if (await _persistence.CreateArticleImageAsync(image))
                     {
                         addImageFlags.Add(image, DataFlag.Create);

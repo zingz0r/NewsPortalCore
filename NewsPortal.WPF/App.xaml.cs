@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Microsoft.Win32;
+using NewsPortal.Data.DTO;
 using NewsPortal.WPF.Models;
 using NewsPortal.WPF.Persistences;
 using NewsPortal.WPF.ViewModels;
@@ -47,7 +48,7 @@ namespace NewsPortal.WPF
             _loginViewModel.LoginFailed += new EventHandler(ViewModel_LoginFailed);
             _loginViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
 
-                _loginView = new LoginWindow();
+            _loginView = new LoginWindow();
             _loginView.DataContext = _loginViewModel;
             _loginView.Show();
         }
@@ -93,7 +94,7 @@ namespace NewsPortal.WPF
 
             _mainViewModel.MessageApplication += new EventHandler<MessageEventArgs>(ViewModel_MessageInvoked);
             _mainViewModel.ConfirmationMessageApplication += new EventHandler<ConfirmationMessageEventArgs>(ViewModel_ConfirmationMessageInvoked);
-            
+
             _mainView = new MainWindow();
             _mainView.DataContext = _mainViewModel;
             _mainView?.Show();
@@ -118,6 +119,7 @@ namespace NewsPortal.WPF
             {
                 var dialog = new OpenFileDialog
                 {
+                    Multiselect = true,
                     CheckFileExists = true,
                     Filter = "Image Files|*.jpg;*.jpeg;*.bmp;*.tif;*.gif;*.png;",
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
@@ -127,8 +129,21 @@ namespace NewsPortal.WPF
 
                 if (result == true)
                 {
-                    e.LargeImageData = ImageHelper.OpenAndResize(dialog.FileName, 700);
-                    e.SmallImageData = ImageHelper.OpenAndResize(dialog.FileName, 350);
+                    foreach (var fileName in dialog.FileNames)
+                    {
+                        if (ImageHelper.IsValidImage(fileName))
+                        {
+                            e.Pictures.Add(new PictureDTO
+                            {
+                                LargeImageData = ImageHelper.OpenAndResize(fileName, 700),
+                                SmallImageData = ImageHelper.OpenAndResize(fileName, 350)
+                            });
+                        }
+                        else
+                        {
+                            MessageBox.Show(fileName + " is not valid image","Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
                 }
             }
             catch { }
@@ -138,7 +153,7 @@ namespace NewsPortal.WPF
         {
             MessageBox.Show("Login Failed!", "News Portal", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
-        
+
         private void ViewModel_MessageInvoked(object sender, MessageEventArgs e)
         {
             MessageBox.Show(e.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -146,13 +161,13 @@ namespace NewsPortal.WPF
         }
         private void ViewModel_ConfirmationMessageInvoked(object sender, ConfirmationMessageEventArgs e)
         {
-            var result = MessageBox.Show(e.Message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var result = MessageBox.Show(e.Message, "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Information);
 
             if (result == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }
         }
-        
+
     }
 }
