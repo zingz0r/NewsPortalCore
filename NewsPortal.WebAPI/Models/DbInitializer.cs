@@ -34,7 +34,7 @@ namespace NewsPortal.WebAPI.Models
                 Email = "zingz0r@tothnet.hu",
                 PhoneNumber = "+36308307074",
             };
-            var zingPassword = "TestTest123";
+            var zingPassword = "Test123Test123";
             var zingRole = new IdentityRole<int>("administrator");
 
             var result1 = _userManager.CreateAsync(zingUser, zingPassword).Result;
@@ -43,12 +43,12 @@ namespace NewsPortal.WebAPI.Models
 
             var testUser = new User
             {
-                UserName = "test1",
+                UserName = "testJanos",
                 Name = "Teszt János",
                 Email = "testjano@tothnet.hu",
                 PhoneNumber = "+36304856585",
             };
-            var testPassword = "TestTest123";
+            var testPassword = "Test123Test123";
             var testRole = new IdentityRole<int>("administrator");
 
             var result4 = _userManager.CreateAsync(testUser, testPassword).Result;

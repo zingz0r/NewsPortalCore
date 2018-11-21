@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.WPF", "NewsPorta
 		{85456482-5996-424D-A3C2-19E2C7B8DEEF} = {85456482-5996-424D-A3C2-19E2C7B8DEEF}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.WebAPI.Test", "NewsPortal.WebAPI.Test\NewsPortal.WebAPI.Test.csproj", "{0FE9EB4F-36B4-4705-AB27-C34177D3DE9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE13B171-A42B-4268-BC39-33B8D99DEE81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE9EB4F-36B4-4705-AB27-C34177D3DE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE9EB4F-36B4-4705-AB27-C34177D3DE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE9EB4F-36B4-4705-AB27-C34177D3DE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE9EB4F-36B4-4705-AB27-C34177D3DE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

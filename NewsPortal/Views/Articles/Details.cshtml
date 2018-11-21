@@ -13,28 +13,33 @@
     <div>
         @Html.DisplayFor(model => model.Summary)
     </div>
-    <div class="text-center p-5">
-        @{
-            bool isFirstShowed = false;
-            foreach (var item in ImageService.GetPictureIdsForAnArticle(Model.Id))
-            {
-                if (!isFirstShowed)
-                {
-                    isFirstShowed = true;
+    @{
+        if (ImageService.GetPictureIdsForAnArticle(Model.Id).Count != 0)
+        {
+            <div class="text-center p-5">
+                @{
+                    bool isFirstShowed = false;
+                    foreach (var item in ImageService.GetPictureIdsForAnArticle(Model.Id))
+                    {
+                        if (!isFirstShowed)
+                        {
+                            isFirstShowed = true;
 
-                    <a href="@Url.Action("GetImage", "Manager", new { id = item, isLarge = true })" data-lightbox="@Model.Id">
-                        <img src="@Url.Action("GetImage", "Manager", new {id = item, isLarge = false})" class="rounded mx-auto d-bloc" alt="" />
-                    </a>
+                            <a href="@Url.Action("GetImage", "Manager", new { id = item, isLarge = true })" data-lightbox="@Model.Id">
+                                <img src="@Url.Action("GetImage", "Manager", new {id = item, isLarge = false})" class="rounded mx-auto d-bloc" alt="" />
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("GetImage", "Manager", new {id = item, isLarge = true})" data-lightbox="@Model.Id"></a>
+                        }
+                    }
                 }
-                else
-                {
-                    <a href="@Url.Action("GetImage", "Manager", new {id = item, isLarge = true})" data-lightbox="@Model.Id"></a>
-                }
-            }
+
+            </div>
         }
-
-    </div>
-    <div>
+    }
+    <div style="white-space: pre-line">
         @Html.DisplayFor(model => model.Text)
     </div>
     <div class="mt-2 alert alert-info">
@@ -43,7 +48,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Home">Back to List</a>
 </div>
 
 @section Scripts
