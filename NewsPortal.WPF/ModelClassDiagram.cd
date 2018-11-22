@@ -29,11 +29,10 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_model" />
-      <Field Name="_selectedArticle" />
     </ShowAsAssociation>
   </Class>
   <Class Name="NewsPortal.Data.DTO.ArticleDTO">
-    <Position X="11.5" Y="4" Width="2.25" />
+    <Position X="11.5" Y="5.25" Width="2.25" />
     <TypeIdentifier />
   </Class>
   <Interface Name="NewsPortal.WPF.Models.INewsPortalModel">
@@ -42,9 +41,6 @@
       <HashCode>AgAQEAgoAAAAAABAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Models\INewsPortalModel.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Articles" />
-    </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="NewsPortal.WPF.Persistences.INewsPortalPersistence" Collapsed="true">
     <Position X="11.5" Y="8.25" Width="2.25" />

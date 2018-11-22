@@ -201,12 +201,6 @@
     <Resource Include="Resources\icon_lock.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NewsPortal.Data\NewsPortal.Data.csproj">
-      <Project>{81e96473-670a-4a8b-bed1-eb315bea0430}</Project>
-      <Name>NewsPortal.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +221,11 @@
   <ItemGroup>
     <None Include="Resources\icon_addarticle.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NewsPortal.Data\NewsPortal.Data.csproj">
+      <Project>{81e96473-670a-4a8b-bed1-eb315bea0430}</Project>
+      <Name>NewsPortal.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,12 +22,12 @@
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Field Name="_model" />
       <Field Name="_loginViewModel" />
+      <Field Name="_mainViewModel" />
+      <Field Name="_loginView" />
       <Field Name="_mainView" />
       <Field Name="_editorView" />
-      <Field Name="_loginView" />
-      <Field Name="_mainViewModel" />
-      <Field Name="_model" />
       <Field Name="_persistance" />
     </ShowAsAssociation>
   </Class>
@@ -55,6 +55,9 @@
     <ShowAsAssociation>
       <Field Name="_persistence" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Articles" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.577" />
   </Class>
   <Class Name="NewsPortal.WPF.Persistences.NewsPortalPersistence" BaseTypeListCollapsed="true">
@@ -101,9 +104,13 @@
       <FileName>ViewModels\MainViewModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_selectedArticle" />
       <Field Name="_model" />
+      <Field Name="_selectedArticle" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_articles" />
+      <Property Name="Articles" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="NewsPortal.WPF.Views.ArticleEditorWindow" BaseTypeListCollapsed="true">
     <Position X="5.75" Y="14" Width="1.75" />
@@ -121,12 +128,12 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="NewsPortal.Data.DTO.ArticleDTO">
-    <Position X="1.25" Y="6.75" Width="2" />
-    <TypeIdentifier />
-  </Class>
   <Class Name="System.Net.Http.HttpClient">
     <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="NewsPortal.Data.DTO.ArticleDTO">
+    <Position X="0.5" Y="6.75" Width="2" />
     <TypeIdentifier />
   </Class>
   <Interface Name="NewsPortal.WPF.Models.INewsPortalModel">
@@ -135,6 +142,9 @@
       <HashCode>AgAQEAgoAAAAAABAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Models\INewsPortalModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Articles" />
+    </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="NewsPortal.WPF.Persistences.INewsPortalPersistence">
     <Position X="15.5" Y="9.25" Width="2" />
