@@ -35,7 +35,7 @@ namespace NewsPortal.WPF.ViewModels
 
         public DelegateCommand CreateImageCommand { get; set; }
         public DelegateCommand DeleteImageCommand { get; set; }
-        
+
         public DelegateCommand LoadCommand { get; private set; }
         public DelegateCommand LogoutCommand { get; private set; }
         public DelegateCommand ExitCommand { get; private set; }
@@ -66,7 +66,8 @@ namespace NewsPortal.WPF.ViewModels
             }
         }
         public ArticleDTO EditedArticle { get; private set; }
-        public ArticleDTO SelectedArticle {
+        public ArticleDTO SelectedArticle
+        {
             get => _selectedArticle;
             set
             {
@@ -170,7 +171,7 @@ namespace NewsPortal.WPF.ViewModels
         {
             EditedArticle.Images = null;
             EditedArticle = null;
-            
+
             OnArticleEditingFinished();
         }
 
@@ -196,7 +197,7 @@ namespace NewsPortal.WPF.ViewModels
                 return;
 
             EditedArticle = new ArticleDTO(article.Clone() as ArticleDTO);
-            
+
             OnArticleEditingStarted();
         }
 
@@ -249,19 +250,27 @@ namespace NewsPortal.WPF.ViewModels
             var imageEventArgs = new ImageEventArgs();
             ImageEditingStarted?.Invoke(this, imageEventArgs);
 
-            var newImage = new PictureDTO()
+            if (imageEventArgs.Pictures == null)
+                return;
+            ;
+            foreach (var image in imageEventArgs.Pictures)
             {
-                LargeImageData = imageEventArgs.LargeImageData,
-                SmallImageData = imageEventArgs.SmallImageData,
-            };
-
-            EditedArticle.Images.Add(newImage);
+                EditedArticle.Images.Add(image);
+            }
         }
 
         private void DeleteImage(PictureDTO image)
         {
             if (image == null)
                 return;
+
+
+            ConfirmationMessageEventArgs confirmationMessage = new ConfirmationMessageEventArgs("Are you sure, you want to delete this image?");
+            OnConfirmationMessageApplication(confirmationMessage);
+
+            if (confirmationMessage.Cancel)
+                return;
+
             EditedArticle.Images.Remove(image);
         }
     }

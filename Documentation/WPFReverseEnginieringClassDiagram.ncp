@@ -1,0 +1,400 @@
+<Project>
+  <Name>Névtelen</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>NewsPortal.WPF.exe</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Interface">
+        <Name>INewsPortalPersistence</Name>
+        <Access>Public</Access>
+        <Location left="961" top="394" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">Task&lt;IEnumerable&lt;ArticleDTO&gt;&gt; ReadArticlesAsync()</Member>
+        <Member type="Method">Task&lt;Boolean&gt; CreateArticleAsync(ArticleDTO article)</Member>
+        <Member type="Method">Task&lt;Boolean&gt; UpdateArticleAsync(ArticleDTO article)</Member>
+        <Member type="Method">Task&lt;Boolean&gt; DeleteArticleAsync(ArticleDTO article)</Member>
+        <Member type="Method">Task&lt;Boolean&gt; CreateArticleImageAsync(PictureDTO image)</Member>
+        <Member type="Method">Task&lt;Boolean&gt; DeleteArticleImageAsync(PictureDTO image)</Member>
+        <Member type="Method">Task&lt;User&gt; GetLoggedInUserInfo()</Member>
+        <Member type="Method">Task&lt;Boolean&gt; LoginAsync(String userName, String userPassword)</Member>
+        <Member type="Method">Task&lt;Boolean&gt; LogoutAsync()</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>INewsPortalModel</Name>
+        <Access>Public</Access>
+        <Location left="393" top="609" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">IReadOnlyList&lt;ArticleDTO&gt; Articles { get; }</Member>
+        <Member type="Event">event EventHandler&lt;ArticleChangedEventArgs&gt; ArticleChanged</Member>
+        <Member type="Method">Void DeleteArticle(ArticleDTO article)</Member>
+        <Member type="Method">Void CreateArticle(ArticleDTO article)</Member>
+        <Member type="Method">Void UpdateArticle(ArticleDTO editedArticle)</Member>
+        <Member type="Method">Task LoadAsync()</Member>
+        <Member type="Method">Task&lt;Boolean&gt; LoginAsync(String userName, String userPassword)</Member>
+        <Member type="Method">Task&lt;Boolean&gt; LogoutAsync()</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>App</Name>
+        <Access>Public</Access>
+        <Location left="471" top="95" />
+        <Size width="162" height="434" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private NewsPortalModel _model</Member>
+        <Member type="Field">private LoginViewModel _loginViewModel</Member>
+        <Member type="Field">private MainViewModel _mainViewModel</Member>
+        <Member type="Field">private LoginWindow _loginView</Member>
+        <Member type="Field">public MainWindow _mainView</Member>
+        <Member type="Field">private ArticleEditorWindow _editorView</Member>
+        <Member type="Field">private NewsPortalPersistence _persistance</Member>
+        <Member type="Constructor">public App()</Member>
+        <Member type="Method">private Void App_Startup(Object sender, StartupEventArgs e)</Member>
+        <Member type="Method">private Void CreateLoginInstance()</Member>
+        <Member type="Method">public Void App_Exit(Object sender, ExitEventArgs e)</Member>
+        <Member type="Method">private Void ViewModel_ExitApplication(Object sender, EventArgs e)</Member>
+        <Member type="Method">private Void ViewModel_LogoutApplication(Object sender, EventArgs e)</Member>
+        <Member type="Method">private Void ViewModel_LoginSuccess(Object sender, EventArgs e)</Member>
+        <Member type="Method">private Void MainViewModel_ArticleEditingStarted(Object sender, EventArgs e)</Member>
+        <Member type="Method">private Void MainViewModel_ArticleEditingFinished(Object sender, EventArgs e)</Member>
+        <Member type="Method">private Void MainViewModel_ImageEditingStarted(Object sender, ImageEventArgs e)</Member>
+        <Member type="Method">private static Void ViewModel_LoginFailed(Object sender, EventArgs e)</Member>
+        <Member type="Method">private Void ViewModel_MessageInvoked(Object sender, MessageEventArgs e)</Member>
+        <Member type="Method">private Void ViewModel_ConfirmationMessageInvoked(Object sender, ConfirmationMessageEventArgs e)</Member>
+        <Member type="Method">public static Void Main()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MainWindow</Name>
+        <Access>Public</Access>
+        <Location left="927" top="35" />
+        <Size width="162" height="230" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">internal Image AddArticleIcon</Member>
+        <Member type="Field">internal Image LogoutIcon</Member>
+        <Member type="Field">internal Image ExitIcon</Member>
+        <Member type="Field">internal Image DownloadIcon</Member>
+        <Member type="Field">internal DataGrid ArticlesGrid</Member>
+        <Member type="Field">private Boolean _contentLoaded</Member>
+        <Member type="Constructor">public MainWindow()</Member>
+        <Member type="Method">public Void InitializeComponent()</Member>
+        <Member type="Method">Void System.Windows.Markup.IComponentConnector.Connect(Int32 connectionId, Object target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>NewsPortalPersistence</Name>
+        <Access>Internal</Access>
+        <Location left="735" top="394" />
+        <Size width="162" height="264" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly HttpClient _client</Member>
+        <Member type="Constructor">public NewsPortalPersistence(String baseAddress)</Member>
+        <Member type="Method">public Task&lt;IEnumerable&lt;ArticleDTO&gt;&gt; ReadArticlesAsync()</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; CreateArticleAsync(ArticleDTO article)</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; UpdateArticleAsync(ArticleDTO article)</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; DeleteArticleAsync(ArticleDTO article)</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; CreateArticleImageAsync(PictureDTO image)</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; DeleteArticleImageAsync(PictureDTO image)</Member>
+        <Member type="Method">public Task&lt;User&gt; GetLoggedInUserInfo()</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; LoginAsync(String userName, String userPassword)</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; LogoutAsync()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>NewsPortalModel</Name>
+        <Access>Internal</Access>
+        <Location left="1172" top="335" />
+        <Size width="162" height="298" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly INewsPortalPersistence _persistence</Member>
+        <Member type="Field">private List&lt;ArticleDTO&gt; _articles</Member>
+        <Member type="Property">public IReadOnlyList&lt;ArticleDTO&gt; Articles { get; }</Member>
+        <Member type="Property">public Boolean IsUserLoggedIn { get; private set; }</Member>
+        <Member type="Event">public event EventHandler&lt;ArticleChangedEventArgs&gt; ArticleChanged</Member>
+        <Member type="Constructor">public NewsPortalModel(INewsPortalPersistence persistence)</Member>
+        <Member type="Method">public Void CreateArticle(ArticleDTO article)</Member>
+        <Member type="Method">public Void DeleteArticle(ArticleDTO article)</Member>
+        <Member type="Method">public Void UpdateArticle(ArticleDTO editArticle)</Member>
+        <Member type="Method">public Task LoadAsync()</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; LoginAsync(String userName, String userPassword)</Member>
+        <Member type="Method">public Task&lt;Boolean&gt; LogoutAsync()</Member>
+        <Member type="Method">private Void OnArticleChanged(Int32 articleId)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ArticleEditorWindow</Name>
+        <Access>Public</Access>
+        <Location left="717" top="35" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">internal ListBox ImageListBox</Member>
+        <Member type="Field">private Boolean _contentLoaded</Member>
+        <Member type="Constructor">public ArticleEditorWindow()</Member>
+        <Member type="Method">public Void InitializeComponent()</Member>
+        <Member type="Method">Void System.Windows.Markup.IComponentConnector.Connect(Int32 connectionId, Object target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LoginWindow</Name>
+        <Access>Public</Access>
+        <Location left="1124" top="35" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">internal PasswordBox passwordBox</Member>
+        <Member type="Field">private Boolean _contentLoaded</Member>
+        <Member type="Constructor">public LoginWindow()</Member>
+        <Member type="Method">public Void InitializeComponent()</Member>
+        <Member type="Method">Void System.Windows.Markup.IComponentConnector.Connect(Int32 connectionId, Object target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LoginViewModel</Name>
+        <Access>Public</Access>
+        <Location left="211" top="349" />
+        <Size width="162" height="315" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly INewsPortalModel _model</Member>
+        <Member type="Property">public DelegateCommand ExitCommand { get; private set; }</Member>
+        <Member type="Property">public DelegateCommand LoginCommand { get; private set; }</Member>
+        <Member type="Property">public String UserName { get; set; }</Member>
+        <Member type="Property">public Object LoginImage { get; }</Member>
+        <Member type="Property">public Object LockImage { get; }</Member>
+        <Member type="Event">public event EventHandler ExitApplication</Member>
+        <Member type="Event">public event EventHandler LoginSuccess</Member>
+        <Member type="Event">public event EventHandler LoginFailed</Member>
+        <Member type="Constructor">public LoginViewModel(INewsPortalModel model)</Member>
+        <Member type="Method">private Void LoginAsync(PasswordBox passwordBox)</Member>
+        <Member type="Method">private Void OnLoginSuccess()</Member>
+        <Member type="Method">private Void OnExitApplication()</Member>
+        <Member type="Method">private Void OnLoginFailed()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MainViewModel</Name>
+        <Access>Internal</Access>
+        <Location left="28" top="315" />
+        <Size width="162" height="808" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly INewsPortalModel _model</Member>
+        <Member type="Field">private ObservableCollection&lt;ArticleDTO&gt; _articles</Member>
+        <Member type="Field">private Boolean _isLoaded</Member>
+        <Member type="Field">private ArticleDTO _selectedArticle</Member>
+        <Member type="Property">public DelegateCommand SaveArticleChangesCommand { get; private set; }</Member>
+        <Member type="Property">public DelegateCommand CancelArticleChangesCommand { get; private set; }</Member>
+        <Member type="Property">public DelegateCommand CreateArticleCommand { get; private set; }</Member>
+        <Member type="Property">public DelegateCommand UpdateArticleCommand { get; set; }</Member>
+        <Member type="Property">public DelegateCommand DeleteArticleCommand { get; set; }</Member>
+        <Member type="Property">public DelegateCommand CreateImageCommand { get; set; }</Member>
+        <Member type="Property">public DelegateCommand DeleteImageCommand { get; set; }</Member>
+        <Member type="Property">public DelegateCommand LoadCommand { get; private set; }</Member>
+        <Member type="Property">public DelegateCommand LogoutCommand { get; private set; }</Member>
+        <Member type="Property">public DelegateCommand ExitCommand { get; private set; }</Member>
+        <Member type="Property">public ObservableCollection&lt;ArticleDTO&gt; Articles { get; private set; }</Member>
+        <Member type="Property">public Boolean IsLoaded { get; private set; }</Member>
+        <Member type="Property">public ArticleDTO EditedArticle { get; private set; }</Member>
+        <Member type="Property">public ArticleDTO SelectedArticle { get; set; }</Member>
+        <Member type="Property">public Object NewsPortalLogo { get; }</Member>
+        <Member type="Property">public Object ExitIcon { get; }</Member>
+        <Member type="Property">public Object LogoutIcon { get; }</Member>
+        <Member type="Property">public Object DownloadIcon { get; }</Member>
+        <Member type="Property">public Object UploadIcon { get; }</Member>
+        <Member type="Property">public Object AddArticleIcon { get; }</Member>
+        <Member type="Property">public Object EditorIcon { get; }</Member>
+        <Member type="Event">public event EventHandler ArticleEditingStarted</Member>
+        <Member type="Event">public event EventHandler ArticleEditingFinished</Member>
+        <Member type="Event">public event EventHandler ExitApplication</Member>
+        <Member type="Event">public event EventHandler LogoutApplication</Member>
+        <Member type="Event">public event EventHandler&lt;ImageEventArgs&gt; ImageEditingStarted</Member>
+        <Member type="Constructor">public MainViewModel(INewsPortalModel model)</Member>
+        <Member type="Method">private Void SaveArticleChanges()</Member>
+        <Member type="Method">private Void CancelArticleChanges()</Member>
+        <Member type="Method">private Void DeleteArticle(ArticleDTO article)</Member>
+        <Member type="Method">private Void EditArticle(ArticleDTO article)</Member>
+        <Member type="Method">private Void LoadAsync()</Member>
+        <Member type="Method">private Void Model_ArticleChanged(Object sender, ArticleChangedEventArgs e)</Member>
+        <Member type="Method">private Void OnExitApplication()</Member>
+        <Member type="Method">private Void OnLogoutApplication()</Member>
+        <Member type="Method">private Void OnArticleEditingStarted()</Member>
+        <Member type="Method">private Void OnArticleEditingFinished()</Member>
+        <Member type="Method">private Void OnImageEditingStarted(Int32 articleId)</Member>
+        <Member type="Method">private Void DeleteImage(PictureDTO image)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ViewModelBase</Name>
+        <Access>Public</Access>
+        <Location left="211" top="76" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Event">public event PropertyChangedEventHandler PropertyChanged</Member>
+        <Member type="Event">public event EventHandler&lt;MessageEventArgs&gt; MessageApplication</Member>
+        <Member type="Event">public event EventHandler&lt;ConfirmationMessageEventArgs&gt; ConfirmationMessageApplication</Member>
+        <Member type="Constructor">protected ViewModelBase()</Member>
+        <Member type="Method">protected virtual Void OnPropertyChanged(String propertyName)</Member>
+        <Member type="Method">protected Void OnMessageApplication(String message)</Member>
+        <Member type="Method">protected Void OnConfirmationMessageApplication(ConfirmationMessageEventArgs eventArg)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>DataFlag</Name>
+        <Access>Public</Access>
+        <Location left="1172" top="736" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Value>Create = 0</Value>
+        <Value>Update = 1</Value>
+        <Value>Delete = 2</Value>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Nesting" first="5" second="11">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="8" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="9" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>174</X>
+          <Y>201</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Realization" first="4" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="5" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1213</X>
+          <Y>702</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="2" second="5">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>679</X>
+          <Y>357</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_model</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>446</X>
+          <Y>446</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>399</X>
+          <Y>446</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_loginViewModel</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="9">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>490</X>
+          <Y>32</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>134</X>
+          <Y>287</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_mainViewModel</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="7">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_loginView</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="3">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>902</X>
+          <Y>273</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_mainView</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="6">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_editorView</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_persistance</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="5" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_persistence</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="8" second="1">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>398</X>
+          <Y>554</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>436</X>
+          <Y>562</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_model</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="9" second="1">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>351</X>
+          <Y>723</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>368</X>
+          <Y>723</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_model</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
