@@ -169,7 +169,7 @@ namespace NewsPortal.WPF.ViewModels
 
         private void CancelArticleChanges()
         {
-            EditedArticle.Images = null;
+            //EditedArticle.Images = null;
             EditedArticle = null;
 
             OnArticleEditingFinished();
